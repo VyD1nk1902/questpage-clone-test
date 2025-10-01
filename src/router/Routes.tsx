@@ -13,6 +13,10 @@ export const routes: Route[] = [
     path: "/",
     Component: lazy(() => import("@/pages/HomePage")),
   },
+  {
+    path: "/mission",
+    Component: lazy(() => import("@/pages/Mission")),
+  },
 ];
 
 export default routes;
