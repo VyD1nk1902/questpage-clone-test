@@ -22,6 +22,10 @@ import {
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useSidebar } from "@/components/ui/sidebar";
+
+const EXPANDED_WIDTH = "16rem"; // Tương đương SIDEBAR_WIDTH
+const COLLAPSED_WIDTH = "3rem"; // Tương đương SIDEBAR_WIDTH_ICON
 
 const Header = () => {
   const deviceType = useDeviceType();
@@ -30,12 +34,26 @@ const Header = () => {
   const location = useLocation();
   const param = useParams();
 
+  const { state, isMobile } = useSidebar();
+
+  const currentWidth = isMobile
+    ? "0px"
+    : state === "collapsed"
+    ? COLLAPSED_WIDTH
+    : EXPANDED_WIDTH;
+
   return (
     <div
       className={cn(
-        "w-full max-w-screen py-3 flex sticky top-0 z-50 bg-accent shrink-0 items-center gap-2 border-b h-[65px]",
-        "px-3 flex gap-3 justify-between"
+        "py-3 px-3 flex justify-between fixed top-0 z-50 bg-accent shrink-0 items-center gap-2 border-b h-[65px]",
+        "md:flex hidden"
       )}
+      style={{
+        left: currentWidth,
+        width: `calc(100% - ${currentWidth})`,
+        //transition để resize mượt mà
+        transition: "width 0.2s ease-in-out, left 0.2s ease-in-out",
+      }}
     >
       <div className="flex gap-6 justify-center items-center">
         <SidebarTrigger />
