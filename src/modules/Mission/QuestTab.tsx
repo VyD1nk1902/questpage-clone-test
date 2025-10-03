@@ -59,7 +59,7 @@ const QuestTab = () => {
       <div>
         <Tabs defaultValue="once">
           <div className="flex justify-between items-center">
-            <span className="px-6">Quest</span>
+            <span className="px-6 text-sm font-semibold">Quest</span>
             <TabsList className="h-10">
               <TabsTrigger
                 value="once"

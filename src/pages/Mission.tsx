@@ -4,6 +4,7 @@ import ArcherHunter from "@/modules/Mission/ArcherHunter";
 import { Separator } from "@/components/ui/separator";
 import ClaimReward from "@/modules/Mission/ClaimReward";
 import QuestTab from "@/modules/Mission/QuestTab";
+import QuestDetail from "@/modules/Mission/QuestDetail";
 
 const Mission = () => {
   return (
@@ -14,6 +15,7 @@ const Mission = () => {
       <Separator />
       <QuestTab />
       <Separator />
+      <QuestDetail />
     </div>
   );
 };
