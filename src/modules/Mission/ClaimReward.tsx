@@ -21,7 +21,7 @@ const ClaimReward = () => {
       </div>
       <Button
         variant={"icon"}
-        className="!rounded-[6px] bg-input w-[124px] text-sm font-medium"
+        className="!rounded-[6px] bg-[#18181b]/55 w-[124px] text-sm font-medium"
         size={"default"}
       >
         Claim Reward
@@ -29,7 +29,7 @@ const ClaimReward = () => {
       <Button
         variant={"icon"}
         size={"default"}
-        className="!rounded-[6px] w-9 bg-input"
+        className="!rounded-[6px] w-9 bg-[#18181b]/55"
       >
         <InfoIcon size={36} />
       </Button>
