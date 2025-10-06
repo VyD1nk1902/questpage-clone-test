@@ -32,9 +32,7 @@ const Index = ({ children }: { children: React.ReactNode }) => {
         <main
           className={cn(
             "flex-1 pb-6 flex flex-col bg-background",
-            deviceType == "desktop"
-              ? "w-[70%] h-screen max-w-5xl mx-auto pt-[80px] min-w-[224px]"
-              : "w-full pt-[72px]"
+            deviceType == "desktop" ? "pt-[80px] h-screen" : "w-full pt-[72px]"
           )}
         >
           {children}

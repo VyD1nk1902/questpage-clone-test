@@ -8,7 +8,7 @@ import QuestDetail from "@/modules/Mission/QuestDetail";
 
 const Mission = () => {
   return (
-    <div className="main-content">
+    <div className="main-content max-w-5xl mx-auto min-w-[224px]">
       <ArcherHunter />
       <Separator />
       <ClaimReward />
