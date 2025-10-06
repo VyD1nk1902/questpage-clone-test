@@ -102,7 +102,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       className="border border-r border-border bg-sidebar"
     >
       <SidebarHeader className="flex flex-col group-data-[collapsible=icon]:place-items-center">
-        <a href="#">
+        <a href="/">
           <img
             src={LuckyTech_logo}
             className="w-full object-contain h-full group-data-[collapsible=icon]:hidden"
