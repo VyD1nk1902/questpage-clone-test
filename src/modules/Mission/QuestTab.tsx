@@ -14,6 +14,7 @@ import {
   WarningCircleIcon,
   XLogoIcon,
 } from "@phosphor-icons/react";
+import { DiamondLogo } from "@/constants/image.constant";
 
 const tabsData = [
   {

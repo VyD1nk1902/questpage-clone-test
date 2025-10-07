@@ -1,6 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { InfoIcon } from "@phosphor-icons/react";
+import { DiamondLogo } from "@/constants/image.constant";
 
 const ClaimReward = () => {
   return (
@@ -8,7 +9,7 @@ const ClaimReward = () => {
       <div className="transform -translate-y-2.5">
         <Avatar className="w-16 h-16">
           <AvatarImage
-            src="/public/Mission/diamond-logo.png"
+            src={DiamondLogo}
             className="w-full h-full object-cover"
             alt="Avatar"
           />
@@ -21,7 +22,7 @@ const ClaimReward = () => {
       </div>
       <Button
         variant={"icon"}
-        className="!rounded-[6px] bg-[#18181b]/55 w-[124px] text-sm font-medium"
+        className="!rounded-[6px] bg-[#18181b]/40 w-[124px] hover:bg-[#18181b]/80 text-sm font-medium"
         size={"default"}
       >
         Claim Reward
@@ -29,7 +30,7 @@ const ClaimReward = () => {
       <Button
         variant={"icon"}
         size={"default"}
-        className="!rounded-[6px] w-9 bg-[#18181b]/55"
+        className="!rounded-[6px] w-9 bg-[#18181b]/40 hover:bg-[#18181b]/80"
       >
         <InfoIcon size={36} />
       </Button>
