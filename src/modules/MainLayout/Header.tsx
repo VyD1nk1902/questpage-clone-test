@@ -20,6 +20,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import ConnectWalletButton from "@/components/button/ConnectWalletButton";
+import LoginTwitterButton from "@/components/button/LoginTwitterButton";
+import LoginDiscordButton from "@/components/button/LoginDiscordButton";
+import LoginTelegramButton from "@/components/button/LoginTelegramButton";
 
 const Header = () => {
   const deviceType = useDeviceType();
@@ -31,9 +35,18 @@ const Header = () => {
   return (
     <div
       className={cn(
-        "w-full max-w-screen py-3 flex fixed top-0 left-0 right-0 z-50 bg-background shrink-0 items-center gap-2 border-b h-[65px]"
+        "w-full max-w-screen px-6 flex fixed top-0 left-0 right-0 z-50 bg-background shrink-0 items-center gap-2 border-b h-[65px] justify-between"
       )}
-    ></div>
+    >
+      <span>Logo</span>
+
+      {/* <div className="w-fit flex gap-3 items-center">
+        <LoginDiscordButton />
+        <LoginTwitterButton />
+        <LoginTelegramButton />
+        <ConnectWalletButton />
+      </div> */}
+    </div>
   );
 };
 

@@ -28,10 +28,8 @@ const getAPI = () => {
 instance.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {
     config.baseURL = getAPI();
-    const rawState = window.localStorage.getItem("user-store");
-    if (rawState) {
-      const parsed = JSON.parse(rawState);
-      const token = parsed.state?.token;
+    const token = window.localStorage.getItem("token");
+    if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
 

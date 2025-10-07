@@ -42,6 +42,10 @@ body {
   overscroll-behavior: none;
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
 @media (max-width: 767px) {
   body.has-bottom-tab {
     padding-bottom: 70px !important;
@@ -263,13 +267,18 @@ select {
 }
 
 .new-token-glow::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, rgba(2, 132, 199, 0.6) 0%, rgba(2, 132, 199, 0.3) 50%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(2, 132, 199, 0.6) 0%,
+    rgba(2, 132, 199, 0.3) 50%,
+    transparent 70%
+  );
   border-radius: 50%;
   pointer-events: none;
   z-index: 0;
@@ -277,13 +286,18 @@ select {
 }
 
 .new-token-glow::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 64px;
   left: 64px;
   width: 200px;
   height: 200px;
-  background: radial-gradient(circle, rgba(2, 132, 199, 0.8) 0%, rgba(2, 132, 199, 0.4) 60%, transparent 80%);
+  background: radial-gradient(
+    circle,
+    rgba(2, 132, 199, 0.8) 0%,
+    rgba(2, 132, 199, 0.4) 60%,
+    transparent 80%
+  );
   border-radius: 50%;
   pointer-events: none;
   z-index: 0;
@@ -292,25 +306,59 @@ select {
 
 /* Chain-specific glow colors */
 .new-token-glow.solana::before {
-  background: radial-gradient(circle, rgba(147, 51, 234, 0.6) 0%, rgba(147, 51, 234, 0.3) 50%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(147, 51, 234, 0.6) 0%,
+    rgba(147, 51, 234, 0.3) 50%,
+    transparent 70%
+  );
 }
 
 .new-token-glow.solana::after {
-  background: radial-gradient(circle, rgba(147, 51, 234, 0.8) 0%, rgba(147, 51, 234, 0.4) 60%, transparent 80%);
+  background: radial-gradient(
+    circle,
+    rgba(147, 51, 234, 0.8) 0%,
+    rgba(147, 51, 234, 0.4) 60%,
+    transparent 80%
+  );
 }
 
 .new-token-glow.bnb::before {
-  background: radial-gradient(circle, rgba(234, 179, 8, 0.6) 0%, rgba(234, 179, 8, 0.3) 50%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(234, 179, 8, 0.6) 0%,
+    rgba(234, 179, 8, 0.3) 50%,
+    transparent 70%
+  );
 }
 
 .new-token-glow.bnb::after {
-  background: radial-gradient(circle, rgba(234, 179, 8, 0.8) 0%, rgba(234, 179, 8, 0.4) 60%, transparent 80%);
+  background: radial-gradient(
+    circle,
+    rgba(234, 179, 8, 0.8) 0%,
+    rgba(234, 179, 8, 0.4) 60%,
+    transparent 80%
+  );
 }
 
 .new-token-glow.ton::before {
-  background: radial-gradient(circle, rgba(2, 132, 199, 0.6) 0%, rgba(2, 132, 199, 0.3) 50%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(2, 132, 199, 0.6) 0%,
+    rgba(2, 132, 199, 0.3) 50%,
+    transparent 70%
+  );
 }
 
 .new-token-glow.ton::after {
-  background: radial-gradient(circle, rgba(2, 132, 199, 0.8) 0%, rgba(2, 132, 199, 0.4) 60%, transparent 80%);
+  background: radial-gradient(
+    circle,
+    rgba(2, 132, 199, 0.8) 0%,
+    rgba(2, 132, 199, 0.4) 60%,
+    transparent 80%
+  );
+}
+
+[data-radix-popper-content-wrapper] {
+  left: -20px !important;
 }
