@@ -28,6 +28,7 @@ import {
   TelegramLogoIcon,
   XLogoIcon,
 } from "@phosphor-icons/react";
+import { LineVertical } from "@/constants/image.constant";
 
 const ArcherHunter = () => {
   return (
@@ -74,7 +75,7 @@ const ArcherHunter = () => {
 
         <img
           className="h-9 mx-1 my-1 justify-center align-center"
-          src="/public/Line (Stroke).svg"
+          src={LineVertical}
           alt=""
         />
 
@@ -98,20 +99,20 @@ const ArcherHunter = () => {
         <Button
           variant={"icon"}
           size={"icon"}
-          className="!rounded bg-input border border-white/10 [box-shadow:0_1px_2px_0_var(--muted)]"
+          className="!rounded bg-input border border-white/10 hover:bg-white/20 [box-shadow:0_1px_2px_0_var(--muted)]"
         >
           <DiscordLogoIcon size={32} weight="fill" color="white" />
         </Button>
         <Button
           variant={"icon"}
           size={"icon"}
-          className="!rounded bg-input border border-white/10 [box-shadow:0_1px_2px_0_var(--muted)]"
+          className="!rounded bg-input border border-white/10 hover:bg-white/20 [box-shadow:0_1px_2px_0_var(--muted)]"
         >
           <XLogoIcon size={32} weight="light" color="white" />
         </Button>
 
         <DropdownMenu>
-          <DropdownMenuTrigger className="bg-primary text-sm font-medium px-3 h-7 rounded-[6px]">
+          <DropdownMenuTrigger className="bg-primary text-sm font-medium px-3 h-7 rounded-[6px] hover:bg-[#0284c7]/80">
             Share
           </DropdownMenuTrigger>
           <DropdownMenuContent>

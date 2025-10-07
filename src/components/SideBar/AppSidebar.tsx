@@ -1,5 +1,4 @@
-import LuckyTech_logo from "/public/Sidebar/LuckyTech_Logo.png";
-import LuckyTech_mini from "/public/Sidebar/LuckyTech_mini_logo.svg";
+import { LuckyTechLogo, LuckyTechMiniLogo } from "@/constants/image.constant";
 
 import * as React from "react";
 import {
@@ -40,23 +39,6 @@ const data = {
     code: "0x76x..ea92",
     avatar: "https://github.com/shadcn.png",
   },
-  teams: [
-    {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
-    },
-  ],
   navMain: [
     {
       title: "Discovery & Earn",
@@ -101,15 +83,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       // style={{ "--sidebar-width": "260px" } as React.CSSProperties}
       className="border border-r border-border bg-sidebar"
     >
-      <SidebarHeader className="flex flex-col group-data-[collapsible=icon]:place-items-center">
+      <SidebarHeader className="flex flex-col justify-center items-center">
         <a href="/">
           <img
-            src={LuckyTech_logo}
-            className="w-full object-contain h-full group-data-[collapsible=icon]:hidden"
+            src={LuckyTechLogo}
+            className="w-full object-contain h-full group-data-[collapsible=icon]:hidden py-3 px-6"
             alt="LuckyTech_logo"
           />
           <img
-            src={LuckyTech_mini}
+            src={LuckyTechMiniLogo}
             className="hidden w-7 object-contain h-7 group-data-[collapsible=icon]:block"
             alt="LuckyTech_logo"
           />

@@ -86,7 +86,7 @@ export function NavUser({
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <Plus />
-              AddAccount
+              Add Account
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

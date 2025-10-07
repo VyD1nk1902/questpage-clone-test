@@ -23,6 +23,7 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSidebar } from "@/components/ui/sidebar";
+import { LineVertical, DiamondLogo } from "@/constants/image.constant";
 
 const EXPANDED_WIDTH = "16rem"; // Tương đương SIDEBAR_WIDTH
 const COLLAPSED_WIDTH = "3rem"; // Tương đương SIDEBAR_WIDTH_ICON
@@ -45,7 +46,7 @@ const Header = () => {
   return (
     <div
       className={cn(
-        "py-3 px-3 flex justify-between fixed top-0 z-50 bg-accent shrink-0 items-center gap-2 border-b h-[65px]",
+        "py-3 px-3 flex justify-between fixed top-0 z-50 bg-accent shrink-0 items-center gap-2 border h-[65px]",
         "md:flex hidden"
       )}
       style={{
@@ -57,19 +58,24 @@ const Header = () => {
     >
       <div className="flex gap-6 justify-center items-center">
         <SidebarTrigger />
-        <Button className="w-full h-[36px] bg-input !rounded-[6px] border border-white flex gap-1">
+        <Button className="w-full h-[36px] bg-white/10 !rounded-[6px] border border-white/10 hover:bg-border flex gap-1">
           <input
             type="search"
             placeholder="Search"
-            className="w-[73px] bg-transparent focus:outline-none"
+            className="w-[73px] bg-transparent focus:outline-none text-muted-foreground"
           />
-          <Button className="bg-transparent">Press</Button>
+          <Button className="bg-transparent text-muted-foreground px-0">
+            Press
+            <span className="w-8 h-6 text-xs text-muted-foreground flex items-center justify-center rounded-[4px] bg-black py-0.5 px-1.5">
+              ⌘ K
+            </span>
+          </Button>
         </Button>
       </div>
       <div className="flex items-center gap-3">
         <div className="flex gap-2">
           <img
-            src="/public/Mission/diamond-logo.png"
+            src={DiamondLogo}
             width={"28px"}
             height={"28px"}
             className="object-contain"
@@ -80,7 +86,7 @@ const Header = () => {
             <span className="text-sm font-medium">1000 Point</span>
           </div>
         </div>
-        <img src="/public/Line (Stroke).svg" className="mx-1" alt="" />
+        <img src={LineVertical} className="mx-1" alt="" />
         <Avatar>
           <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
           <AvatarFallback>CN</AvatarFallback>

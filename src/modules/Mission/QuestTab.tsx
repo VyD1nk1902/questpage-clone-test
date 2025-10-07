@@ -14,6 +14,7 @@ import {
   WarningCircleIcon,
   XLogoIcon,
 } from "@phosphor-icons/react";
+import { DiamondLogo } from "@/constants/image.constant";
 
 const tabsData = [
   {
@@ -79,7 +80,10 @@ const QuestTab = () => {
             {tabsData.map((item) => {
               const IconComponent = item.icon;
               return (
-                <Card className="flex items-center gap-3 px-6 py-4 bg-background">
+                <Card
+                  className="flex items-center gap-3 px-6 py-4 bg-background hover:bg-[#3f3f46]/30"
+                  key={item.id}
+                >
                   <CardHeader className="p-2">
                     {item.icon === DiscordLogoIcon ? (
                       <IconComponent size={24} weight="fill" fill="white" />
@@ -92,7 +96,7 @@ const QuestTab = () => {
                       <span className="text-sm">{item.title}</span>
                       <span className="flex gap-1">
                         <img
-                          src="/public/Mission/diamond-logo.png"
+                          src={DiamondLogo}
                           alt="diamond-logo"
                           className="w-4 h-4"
                         />
@@ -103,7 +107,7 @@ const QuestTab = () => {
                     </div>
                   </CardContent>
 
-                  <Button className="py-0 px-3 bg-card !rounded">
+                  <Button className="py-0 px-3 bg-card !rounded border border-white/10 hover:bg-white/20">
                     {item.btn}
                   </Button>
                 </Card>
