@@ -12,40 +12,48 @@ import useDeviceType from "@/hooks/useMediaQuery";
 import { Link } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
 
+import {
+  DiamondLogo,
+  banner,
+  bgCarousel_1,
+  bgCarousel_2,
+  bgCarousel_3,
+} from "@/constants/image.constant";
+
 const dataCarousel = [
   {
     id: "1",
-    background: "/public/Homepage/bg-carousel-1.png",
+    background: bgCarousel_1,
     title: "It's time for Capybaras!",
     desc: "1000 Point",
   },
   {
     id: "2",
-    background: "/public/Homepage/bg-carousel-2.png",
+    background: bgCarousel_2,
     title: "It's time for Capybaras!",
     desc: "1000 Point",
   },
   {
     id: "3",
-    background: "/public/Homepage/bg-carousel-3.png",
+    background: bgCarousel_3,
     title: "It's time for Capybaras!",
     desc: "1000 Point",
   },
   {
     id: "4",
-    background: "/public/Homepage/bg-carousel-1.png",
+    background: bgCarousel_1,
     title: "It's time for Capybaras!",
     desc: "1000 Point",
   },
   {
     id: "5",
-    background: "/public/Homepage/bg-carousel-2.png",
+    background: bgCarousel_2,
     title: "It's time for Capybaras!",
     desc: "1000 Point",
   },
   {
     id: "6",
-    background: "/public/Homepage/bg-carousel-3.png",
+    background: bgCarousel_3,
     title: "It's time for Capybaras!",
     desc: "1000 Point",
   },
@@ -57,7 +65,7 @@ const Banner = () => {
     <div className="flex flex-col gap-6 w-full">
       <div className="w-full rounded-[24px]">
         <img
-          src="/public/Homepage/banner.png"
+          src={banner}
           className="w-full h-full object-contain aspect-2/1"
           alt="banner"
         />
@@ -101,7 +109,7 @@ const Banner = () => {
                         <Separator />
                         <span className="flex gap-1">
                           <img
-                            src="/public/Mission/diamond-logo.png"
+                            src={DiamondLogo}
                             className="w-4 h-4"
                             alt="diamond-logo"
                           />
