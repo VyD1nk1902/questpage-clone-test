@@ -58,7 +58,13 @@ const Header = () => {
     >
       <div className="flex gap-6 justify-center items-center">
         <SidebarTrigger />
-        <Button className="w-full h-[36px] bg-white/10 !rounded-[6px] border border-white/10 hover:bg-border flex gap-1">
+        <div
+          role="button"
+          tabIndex={0}
+          // onClick = {}
+          // onKeyDown = {}
+          className="w-full h-9 px-4 bg-white/10 !rounded-[6px] border border-white/10 hover:bg-border flex gap-1 "
+        >
           <input
             type="search"
             placeholder="Search"
@@ -70,7 +76,7 @@ const Header = () => {
               ⌘ K
             </span>
           </Button>
-        </Button>
+        </div>
       </div>
       <div className="flex items-center gap-3">
         <div className="flex gap-2">
@@ -91,6 +97,11 @@ const Header = () => {
           <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
+        {/* <LoginDialog>
+          <Button variant={"default"} className="!rounded-[6px]">
+            Login
+          </Button>
+        </LoginDialog> */}
       </div>
     </div>
   );
