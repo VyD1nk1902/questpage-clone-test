@@ -28,6 +28,9 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Separator } from "../ui/separator";
+import { useApi } from "@/hooks/useApi";
+import { userApi } from "@/apis/user.api";
+import { getShortAddress } from "@/utils/common-utils";
 
 export function NavUser({
   user,
@@ -39,6 +42,8 @@ export function NavUser({
   };
 }) {
   const { isMobile } = useSidebar();
+  const token = localStorage.getItem("token");
+  const { data } = useApi(token ? userApi.getUserInfo : null);
 
   return (
     <SidebarMenu>
@@ -50,12 +55,19 @@ export function NavUser({
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar>
-                <AvatarImage src={user.avatar} alt={user.name} />
+                <AvatarImage
+                  src={data?.data.avatar || "https://github.com/shadcn.png"}
+                  alt={data?.data.username || ""}
+                />
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.name}</span>
-                <span className="truncate text-xs">{user.code}</span>
+                <span className="truncate font-medium">
+                  {data?.data.username}
+                </span>
+                <span className="truncate text-xs">
+                  {getShortAddress(data?.data.walletAddress || "")}
+                </span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -73,12 +85,19 @@ export function NavUser({
             <DropdownMenuGroup>
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar>
-                  <AvatarImage src={user.avatar} alt={user.name} />
+                  <AvatarImage
+                    src={data?.data.avatar || "https://github.com/shadcn.png"}
+                    alt={data?.data.username || ""}
+                  />
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.name}</span>
-                  <span className="truncate text-xs">{user.code}</span>
+                  <span className="truncate font-medium">
+                    {data?.data.username || ""}
+                  </span>
+                  <span className="truncate text-xs">
+                    {getShortAddress(data?.data.walletAddress || "")}
+                  </span>
                 </div>
                 <Check size={20} />
               </div>

@@ -25,6 +25,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSidebar } from "@/components/ui/sidebar";
 import ConnectWalletButton from "@/components/button/ConnectWalletButton";
 import { LineVertical, DiamondLogo } from "@/constants/image.constant";
+import { Separator } from "@/components/ui/separator";
 
 const EXPANDED_WIDTH = "16rem"; // Tương đương SIDEBAR_WIDTH
 const COLLAPSED_WIDTH = "3rem"; // Tương đương SIDEBAR_WIDTH_ICON
@@ -87,7 +88,7 @@ const Header = () => {
             <span className="text-sm font-medium">1000 Point</span>
           </div>
         </div>
-        <img src="/public/Line (Stroke).svg" className="mx-1" alt="" />
+        <Separator orientation="vertical" className="h-9" />
         <ConnectWalletButton />
       </div>
     </div>

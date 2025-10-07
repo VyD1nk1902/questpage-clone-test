@@ -180,33 +180,39 @@ const ConnectWalletButton = () => {
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+              <AvatarImage
+                src={data?.data.avatar || "https://github.com/shadcn.png"}
+                alt="@shadcn"
+              />
             </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-accent min-w-[200px] overflow-hidden">
             <DropdownMenuLabel className="flex items-center gap-2">
               <Avatar>
                 <AvatarImage
-                  src="https://github.com/shadcn.png"
+                  src={data?.data.avatar || "https://github.com/shadcn.png"}
                   alt="@shadcn"
                 />
               </Avatar>
               <div className="flex flex-col">
-                <span>{data && getShortAddress(data.data.walletAddress)}</span>
+                <span>{getShortAddress(data?.data.walletAddress || "")}</span>
                 <span className="text-xs opacity-60">m@example.com</span>
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem className="cursor-pointer hover:!bg-border">
               <User size={16} /> Profile
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            <DropdownMenuItem className="cursor-pointer hover:!bg-border">
               <Gear size={16} />
               Setting
             </DropdownMenuItem>
             <DropdownMenuSeparator />
 
-            <DropdownMenuItem onClick={handleDisconnect}>
+            <DropdownMenuItem
+              onClick={handleDisconnect}
+              className="cursor-pointer hover:!bg-border"
+            >
               <SignOut size={16} />
               Logout
             </DropdownMenuItem>
