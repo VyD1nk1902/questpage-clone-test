@@ -9,6 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import DiamondLogo from "@/assets/Mission/diamond-logo.png";
 
 interface LeaderBoardProps {
   data: any;
@@ -44,11 +45,7 @@ const LeaderBoard = (props: LeaderBoardProps) => {
           <TableHead className="p-2 w-24">
             {myRank ? (
               <div className="flex gap-2 justify-start items-center text-base font-bold">
-                <img
-                  src="/public/Mission/diamond-logo.png"
-                  className="w-4 h-4"
-                  alt="diamond-logo"
-                />
+                <img src={DiamondLogo} className="w-4 h-4" alt="diamond-logo" />
                 12
               </div>
             ) : (
@@ -87,11 +84,7 @@ const LeaderBoard = (props: LeaderBoardProps) => {
 
             <TableCell className="py-3">
               <div className="flex gap-2 justify-start items-center text-base font-bold">
-                <img
-                  src="/public/Mission/diamond-logo.png"
-                  className="w-4 h-4"
-                  alt="diamond-logo"
-                />
+                <img src={DiamondLogo} className="w-4 h-4" alt="diamond-logo" />
                 {item.total}
               </div>
             </TableCell>
