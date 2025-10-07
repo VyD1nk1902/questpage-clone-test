@@ -23,6 +23,10 @@ export const routes: Route[] = [
     path: "/auth/discord/callback",
     Component: lazy(() => import("@/pages/CallBackPage/DiscordCallBackPage")),
   },
+  {
+    path: "/mission",
+    Component: lazy(() => import("@/pages/Mission")),
+  },
 ];
 
 export default routes;

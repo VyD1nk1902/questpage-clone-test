@@ -1,11 +1,12 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import React, { useEffect, useState } from "react";
+import React from "react";
+import Banner from "@/modules/Homepage/Banner";
+import TodayTop from "@/modules/Homepage/TodayTop";
 
 const HomePage = () => {
   return (
-    <div className="main-content flex gap-3">
-      <span>Home page</span>
+    <div className="grid grid-cols-[60%_40%] gap-6 px-3 py-5">
+      <Banner />
+      <TodayTop />
     </div>
   );
 };
