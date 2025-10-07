@@ -28,6 +28,16 @@ import {
   TelegramLogoIcon,
   XLogoIcon,
 } from "@phosphor-icons/react";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 const ArcherHunter = () => {
   return (
@@ -52,24 +62,43 @@ const ArcherHunter = () => {
       </span>
 
       <div className="flex items-center gap-3">
-        <div className="flex -space-x-2">
-          <Avatar>
-            <AvatarImage src="" alt="@shadcn" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          <Avatar>
-            <AvatarImage src="" alt="@shadcn" />
-            <AvatarFallback>+4</AvatarFallback>
-          </Avatar>
-        </div>
+        <Sheet>
+          <SheetTrigger>
+            <div className="flex -space-x-2">
+              <Avatar>
+                <AvatarImage src="" alt="@shadcn" />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+              <Avatar>
+                <AvatarImage
+                  src="https://github.com/shadcn.png"
+                  alt="@shadcn"
+                />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+              <Avatar>
+                <AvatarImage
+                  src="https://github.com/shadcn.png"
+                  alt="@shadcn"
+                />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+              <Avatar>
+                <AvatarImage src="" alt="@shadcn" />
+                <AvatarFallback>+4</AvatarFallback>
+              </Avatar>
+            </div>
+          </SheetTrigger>
+          <SheetContent className="!max-w-xl">
+            <SheetHeader>
+              <SheetTitle>Leaderboard</SheetTitle>
+              <SheetDescription>
+                Compete with friends to top the charts
+              </SheetDescription>
+            </SheetHeader>
+          </SheetContent>
+        </Sheet>
+
         <span className="text-center text-muted-foreground">5.47K</span>
 
         <img

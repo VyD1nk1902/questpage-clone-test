@@ -23,6 +23,7 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSidebar } from "@/components/ui/sidebar";
+import ConnectWalletButton from "@/components/button/ConnectWalletButton";
 
 const EXPANDED_WIDTH = "16rem"; // Tương đương SIDEBAR_WIDTH
 const COLLAPSED_WIDTH = "3rem"; // Tương đương SIDEBAR_WIDTH_ICON
@@ -81,10 +82,7 @@ const Header = () => {
           </div>
         </div>
         <img src="/public/Line (Stroke).svg" className="mx-1" alt="" />
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
+        <ConnectWalletButton />
       </div>
     </div>
   );

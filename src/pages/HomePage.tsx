@@ -1,6 +1,6 @@
+import Banner from "@/modules/HomePage/Banner";
+import TodayTop from "@/modules/HomePage/TodayTop";
 import React from "react";
-import Banner from "@/modules/Homepage/Banner";
-import TodayTop from "@/modules/Homepage/TodayTop";
 
 const HomePage = () => {
   return (

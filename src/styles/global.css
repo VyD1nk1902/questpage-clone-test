@@ -362,3 +362,22 @@ select {
 [data-radix-popper-content-wrapper] {
   left: -20px !important;
 }
+
+.rc-pagination-item {
+  background-color: var(--background) !important;
+  border: none !important;
+  color: var(--background) !important;
+}
+
+.rc-pagination-item-active {
+  border: 1px solid var(--border) !important;
+  background-color: var(--background) !important;
+}
+
+.rc-pagination-item:hover {
+  background-color: var(--muted) !important;
+}
+
+.rc-pagination-item a:hover {
+  color: var(--foreground) !important;
+}

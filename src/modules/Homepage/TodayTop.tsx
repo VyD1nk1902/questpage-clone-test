@@ -10,6 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import LeaderBoard from "@/components/LeaderBoard";
 
 const dataTable = [
   {
@@ -98,67 +99,7 @@ const TodayTop = () => {
         </Button>
       </div>
       <div className="rounded-xl overflow-hidden border border-border">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-10 text-center py-5 align-middle">
-                <span className="p-2 bg-secondary rounded border border-border text-lg">
-                  1
-                </span>
-              </TableHead>
-              <TableHead className="py-3 align-middle">
-                <div className="flex gap-3 items-center text-foreground text-sm font-medium">
-                  Wallet
-                </div>
-              </TableHead>
-              <TableHead className="py-3">
-                <div className="flex gap-2 justify-end items-center text-foreground text-base font-bold">
-                  <img
-                    src="/public/Mission/diamond-logo.png"
-                    className="w-4 h-4"
-                    alt="diamond-logo"
-                  />
-                  12
-                </div>
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {dataTable.map((item) => (
-              <TableRow key={item.id}>
-                <TableCell className="w-10 text-center py-3 align-middle">
-                  <span className="p-2 bg-secondary rounded border border-border text-lg">
-                    {item.id}
-                  </span>
-                </TableCell>
-                <TableCell className="py-3 align-middle">
-                  <div className="flex gap-3 items-center">
-                    <Avatar>
-                      <AvatarImage src={item.avatar} alt={item.name} />
-                      <AvatarFallback className="rounded-lg">CN</AvatarFallback>
-                    </Avatar>
-                    <div className="flex flex-col gap-1">
-                      <span className="text-sm font-medium">{item.name}</span>
-                      <span className="text-xs font-medium text-muted-foreground">
-                        {item.code}
-                      </span>
-                    </div>
-                  </div>
-                </TableCell>
-                <TableCell className="py-3">
-                  <div className="flex gap-2 justify-end items-center text-base font-bold">
-                    <img
-                      src="/public/Mission/diamond-logo.png"
-                      className="w-4 h-4"
-                      alt="diamond-logo"
-                    />
-                    {item.total}
-                  </div>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        <LeaderBoard data={dataTable} myRank={true} />
       </div>
     </div>
   );

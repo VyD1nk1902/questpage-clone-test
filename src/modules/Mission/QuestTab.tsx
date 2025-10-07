@@ -55,81 +55,72 @@ const tabsData = [
 
 const QuestTab = () => {
   return (
-    <div>
-      <div>
-        <Tabs defaultValue="once">
-          <div className="flex justify-between items-center">
-            <span className="px-6 text-sm font-semibold">Quest</span>
-            <TabsList className="h-10">
-              <TabsTrigger
-                value="once"
-                className="data-[state=active]:bg-primary"
-              >
-                Once
-              </TabsTrigger>
-              <TabsTrigger
-                value="daily"
-                className="data-[state=active]:bg-primary"
-              >
-                Daily
-              </TabsTrigger>
-            </TabsList>
-          </div>
-          <TabsContent value="once" className="flex flex-col gap-3">
-            {tabsData.map((item) => {
-              const IconComponent = item.icon;
-              return (
-                <Card className="flex items-center gap-3 px-6 py-4 bg-background">
-                  <CardHeader className="p-2">
-                    {item.icon === DiscordLogoIcon ? (
-                      <IconComponent size={24} weight="fill" fill="white" />
-                    ) : (
-                      <IconComponent size={24} />
-                    )}
-                  </CardHeader>
-                  <CardContent className="p-0 flex-grow flex-shrink-0 basis-0">
-                    <div className="flex flex-col gap-2 ">
-                      <span className="text-sm">{item.title}</span>
-                      <span className="flex gap-1">
-                        <img
-                          src="/public/Mission/diamond-logo.png"
-                          alt="diamond-logo"
-                          className="w-4 h-4"
-                        />
-                        <span className="text-muted-foreground text-xs">
-                          {item.subTitle}
-                        </span>
-                      </span>
-                    </div>
-                  </CardContent>
-
-                  <Button className="py-0 px-3 bg-card !rounded">
-                    {item.btn}
-                  </Button>
-                </Card>
-              );
-            })}
-          </TabsContent>
-          <TabsContent value="daily">
-            <Card className="flex flex-col items-center justify-center p-20 bg-background">
-              <CardHeader>
-                <WarningCircleIcon size={32} />
+    <Tabs defaultValue="once">
+      <div className="flex justify-between items-center">
+        <span className="px-6 text-sm font-semibold">Quest</span>
+        <TabsList className="h-10">
+          <TabsTrigger value="once" className="data-[state=active]:bg-primary">
+            Once
+          </TabsTrigger>
+          <TabsTrigger value="daily" className="data-[state=active]:bg-primary">
+            Daily
+          </TabsTrigger>
+        </TabsList>
+      </div>
+      <TabsContent value="once" className="flex flex-col gap-3">
+        {tabsData.map((item) => {
+          const IconComponent = item.icon;
+          return (
+            <Card
+              key={item.id}
+              className="flex items-center gap-3 px-6 py-4 bg-background"
+            >
+              <CardHeader className="p-2">
+                {item.icon === DiscordLogoIcon ? (
+                  <IconComponent size={24} weight="fill" fill="white" />
+                ) : (
+                  <IconComponent size={24} />
+                )}
               </CardHeader>
-              <CardContent>
-                <div className="flex flex-col items-center justify-center">
-                  <span>Oops!!!</span>
+              <CardContent className="p-0 flex-grow flex-shrink-0 basis-0">
+                <div className="flex flex-col gap-2 ">
+                  <span className="text-sm">{item.title}</span>
+                  <span className="flex gap-1">
+                    <img
+                      src="/public/Mission/diamond-logo.png"
+                      alt="diamond-logo"
+                      className="w-4 h-4"
+                    />
+                    <span className="text-muted-foreground text-xs">
+                      {item.subTitle}
+                    </span>
+                  </span>
                 </div>
               </CardContent>
-              <CardFooter>
-                <span className="font-normal text-muted-foreground">
-                  No mission available
-                </span>
-              </CardFooter>
+
+              <Button className="py-0 px-3 bg-card !rounded">{item.btn}</Button>
             </Card>
-          </TabsContent>
-        </Tabs>
-      </div>
-    </div>
+          );
+        })}
+      </TabsContent>
+      <TabsContent value="daily">
+        <Card className="flex flex-col items-center justify-center p-20 bg-background">
+          <CardHeader>
+            <WarningCircleIcon size={32} />
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-col items-center justify-center">
+              <span>Oops!!!</span>
+            </div>
+          </CardContent>
+          <CardFooter>
+            <span className="font-normal text-muted-foreground">
+              No mission available
+            </span>
+          </CardFooter>
+        </Card>
+      </TabsContent>
+    </Tabs>
   );
 };
 export default QuestTab;
