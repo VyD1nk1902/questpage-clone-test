@@ -47,7 +47,7 @@ const data = {
     },
     {
       title: "Leaderboard",
-      url: "#",
+      url: "/leaderboard",
       icon: TrophyIcon,
     },
     {
