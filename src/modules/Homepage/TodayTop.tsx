@@ -12,7 +12,6 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import LeaderBoard from "@/components/LeaderBoard";
 import {
-  DiamondLogo,
   ava_1,
   ava_2,
   ava_3,
