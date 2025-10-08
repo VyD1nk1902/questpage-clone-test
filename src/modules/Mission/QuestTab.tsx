@@ -74,7 +74,7 @@ const QuestTab = () => {
           return (
             <Card
               key={item.id}
-              className="flex items-center gap-3 px-6 py-4 bg-background"
+              className="flex items-center gap-3 px-6 py-4 bg-background hover:bg-white/10"
             >
               <CardHeader className="p-2">
                 {item.icon === DiscordLogoIcon ? (
@@ -88,7 +88,7 @@ const QuestTab = () => {
                   <span className="text-sm">{item.title}</span>
                   <span className="flex gap-1">
                     <img
-                      src="/public/Mission/diamond-logo.png"
+                      src={DiamondLogo}
                       alt="diamond-logo"
                       className="w-4 h-4"
                     />
@@ -99,7 +99,9 @@ const QuestTab = () => {
                 </div>
               </CardContent>
 
-              <Button className="py-0 px-3 bg-card !rounded">{item.btn}</Button>
+              <Button className="py-0 px-3 bg-card !rounded hover:bg-border">
+                {item.btn}
+              </Button>
             </Card>
           );
         })}
