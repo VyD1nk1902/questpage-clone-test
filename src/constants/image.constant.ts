@@ -18,6 +18,7 @@ import ava_6 from "@/assets/Homepage/ava-6.png";
 import ava_7 from "@/assets/Homepage/ava-7.png";
 import ava_8 from "@/assets/Homepage/ava-8.png";
 import ava_9 from "@/assets/Homepage/ava-9.png";
+import ethLogo from "@/assets/eth-logo.svg";
 
 export {
   empty,
@@ -38,4 +39,5 @@ export {
   ava_7,
   ava_8,
   ava_9,
+  ethLogo,
 };
