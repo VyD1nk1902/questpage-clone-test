@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1",
+    "background": "/src/assets/Homepage/bg-carousel-1.png",
+    "title": "It's time for Capybaras!",
+    "desc": "1000 Point"
+  },
+  {
+    "id": "2",
+    "background": "/src/assets/Homepage/bg-carousel-2.png",
+    "title": "It's time for Capybaras!",
+    "desc": "1000 Point"
+  },
+  {
+    "id": "3",
+    "background": "/src/assets/Homepage/bg-carousel-3.png",
+    "title": "It's time for Capybaras!",
+    "desc": "1000 Point"
+  }
+]
