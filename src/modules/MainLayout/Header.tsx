@@ -1,6 +1,6 @@
 import useDeviceType from "@/hooks/useMediaQuery";
 import { cn } from "@/lib/utils";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   CaretDown,
@@ -26,6 +26,7 @@ import { useSidebar } from "@/components/ui/sidebar";
 import ConnectWalletButton from "@/components/button/ConnectWalletButton";
 import { LineVertical, DiamondLogo } from "@/constants/image.constant";
 import { Separator } from "@/components/ui/separator";
+import SearchCommand from "@/components/SearchCommand";
 
 const EXPANDED_WIDTH = "16rem"; // Tương đương SIDEBAR_WIDTH
 const COLLAPSED_WIDTH = "3rem"; // Tương đương SIDEBAR_WIDTH_ICON
@@ -38,6 +39,8 @@ const Header = () => {
   const param = useParams();
 
   const { state, isMobile } = useSidebar();
+
+  const [open, setOpen] = useState(false);
 
   const currentWidth = isMobile
     ? "0px"
@@ -63,7 +66,7 @@ const Header = () => {
         <div
           role="button"
           tabIndex={0}
-          // onClick = {}
+          onClick={() => setOpen(true)}
           // onKeyDown = {}
           className="w-full h-9 px-4 bg-white/10 !rounded-[6px] border border-white/10 hover:bg-border flex gap-1 "
         >
@@ -79,6 +82,7 @@ const Header = () => {
             </span>
           </Button>
         </div>
+        <SearchCommand open={open} setOpen={setOpen} />
       </div>
       <div className="flex items-center gap-3">
         <div className="flex gap-2">
