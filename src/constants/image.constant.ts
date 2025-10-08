@@ -19,6 +19,10 @@ import ava_7 from "@/assets/Homepage/ava-7.png";
 import ava_8 from "@/assets/Homepage/ava-8.png";
 import ava_9 from "@/assets/Homepage/ava-9.png";
 import ethLogo from "@/assets/eth-logo.svg";
+import bg_Discord from "@/assets/Community/bg-discord.png";
+import bg_Galxe from "@/assets/Community/bg-galxe.png";
+import bg_Tele from "@/assets/Community/bg-tele.png";
+import bg_X from "@/assets/Community/bg-X.png";
 
 export {
   empty,
@@ -40,4 +44,8 @@ export {
   ava_8,
   ava_9,
   ethLogo,
+  bg_X,
+  bg_Discord,
+  bg_Galxe,
+  bg_Tele,
 };
