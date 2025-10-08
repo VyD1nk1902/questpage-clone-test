@@ -1,6 +1,6 @@
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
-import { nodePolyfills } from 'vite-plugin-node-polyfills';
+import { nodePolyfills } from "vite-plugin-node-polyfills";
 
 import * as path from "path";
 
@@ -15,20 +15,20 @@ export default defineConfig({
         process: true,
       },
       include: [
-        'stream',
-        'http',
-        'https',
-        'url',
-        'crypto',
-        'util',
-        'buffer',
-        'events',
-        'querystring',
-        'path',
-        'os',
-        'assert',
+        "stream",
+        "http",
+        "https",
+        "url",
+        "crypto",
+        "util",
+        "buffer",
+        "events",
+        "querystring",
+        "path",
+        "os",
+        "assert",
       ],
-      exclude: ['fs'],
+      exclude: ["fs"],
     }),
   ],
   server: {
@@ -40,7 +40,7 @@ export default defineConfig({
       external: [],
       output: {
         globals: {
-          buffer: 'Buffer',
+          buffer: "Buffer",
         },
       },
     },
@@ -53,16 +53,16 @@ export default defineConfig({
   },
   publicDir: "public",
   define: {
-    global: 'globalThis',
+    global: "globalThis",
   },
   optimizeDeps: {
     include: [
-      '@solana/web3.js',
-      '@solana/spl-token',
-      '@metaplex-foundation/umi',
-      '@metaplex-foundation/mpl-token-metadata',
-      'eventemitter3',
-      'buffer',
+      "@solana/web3.js",
+      "@solana/spl-token",
+      "@metaplex-foundation/umi",
+      "@metaplex-foundation/mpl-token-metadata",
+      "eventemitter3",
+      "buffer",
     ],
   },
 });

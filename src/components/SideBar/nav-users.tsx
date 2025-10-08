@@ -32,9 +32,7 @@ import { useApi } from "@/hooks/useApi";
 import { userApi } from "@/apis/user.api";
 import { getShortAddress } from "@/utils/common-utils";
 
-export function NavUser({
-  user,
-}: {
+export function NavUser({}: {
   user: {
     name: string;
     code: string;
