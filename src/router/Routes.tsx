@@ -38,6 +38,10 @@ export const routes: Route[] = [
     path: "/leaderboard",
     Component: lazy(() => import("@/pages/LeaderBoardPage")),
   },
+  {
+    path: "/community",
+    Component: lazy(() => import("@/pages/Community")),
+  },
 ];
 
 export default routes;
