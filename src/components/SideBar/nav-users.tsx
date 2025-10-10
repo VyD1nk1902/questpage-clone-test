@@ -28,9 +28,11 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Separator } from "../ui/separator";
-import { useApi } from "@/hooks/useApi";
 import { userApi } from "@/apis/user.api";
 import { getShortAddress } from "@/utils/common-utils";
+import useApi from "@/hooks/useApi";
+import { useState } from "react";
+import { useUserStore } from "@/stores/user.store";
 
 export function NavUser({
   user,
@@ -42,7 +44,8 @@ export function NavUser({
   };
 }) {
   const { isMobile } = useSidebar();
-  const token = localStorage.getItem("token");
+
+  const { token } = useUserStore();
   const { data } = useApi(token ? userApi.getUserInfo : null);
 
   return (

@@ -1,32 +1,66 @@
+import axios from "axios";
 import instance from "./instance";
 
 const route = "/user";
 
 export const userApi = {
-  async getUserInfo() {
-    const res = await instance.get(`${route}/info`);
-    return res.data;
-  },
+  getUserInfo: `${route}/info`,
 
-  async createSignature(address: string) {
+  getLeaderBoard: (
+    type: string,
+    currentPage?: number,
+    sizePage?: number,
+    walletAddress?: string
+  ) =>
+    `${route}/leaderboard?type=${type}&currentPage=${currentPage}&sizePage=${sizePage}&walletAddress=${walletAddress}`,
+
+  createSignature: async (address: string) => {
     const res = await instance.post(`${route}/create-signature`, {
       address: address,
     });
     return res.data;
   },
 
-  async register(
+  register: async (
     address: string,
     signature: string,
     message: string,
     inviteCode: string
-  ) {
+  ) => {
     const res = await instance.post(`${route}/signup-new`, {
       address: address,
       signature: signature,
       message: message,
       inviteCode: inviteCode,
     });
+    return res.data;
+  },
+
+  uploadImageDirect: async (file: File) => {
+    const uploadURL = await instance
+      .post(`/generate-upload-url`)
+      .then((res) => res.data.data.uploadURL);
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const res = await fetch(uploadURL, {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await res.json();
+    if (!data.success) throw new Error("Upload failed");
+
+    return data.result.variants[0];
+  },
+
+  async updateUser(username: string, avatar: string) {
+    const res = await instance.post(`${route}/update`, {
+      username: username,
+      avatar: avatar,
+    });
+
     return res.data;
   },
 };

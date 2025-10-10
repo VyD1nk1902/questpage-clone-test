@@ -1,9 +1,10 @@
 import React from "react";
 import { Button } from "../ui/button";
+import { CaretRight, XLogoIcon } from "@phosphor-icons/react";
 
 const LoginTwitterButton = () => {
   const clientId = import.meta.env.VITE_TWITTER_CLIENT_ID;
-  const redirectUri = "http://localhost:3000/auth/twitter/callback";
+  const redirectUri = `${import.meta.env.VITE_URL}/auth/twitter/callback`;
   const scope = "tweet.read users.read offline.access";
   const state = "random_string_state";
 
@@ -45,9 +46,14 @@ const LoginTwitterButton = () => {
   };
 
   return (
-    <Button onClick={loginWithTwitter} className="px-4 py-2 w-fit rounded">
-      Login with Twitter
-    </Button>
+    <div
+      className="w-full h-10 flex items-center justify-between px-4 bg-background border border-border rounded-lg cursor-pointer hover:opacity-80"
+      onClick={loginWithTwitter}
+    >
+      <XLogoIcon className="w-6 h-6" />
+      <span className="text-sm">Link To X</span>
+      <CaretRight />
+    </div>
   );
 };
 

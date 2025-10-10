@@ -12,7 +12,6 @@ import {
   Headset,
   Map,
   PieChart,
-  Settings2,
   SquareTerminal,
   TrophyIcon,
   UserCircleIcon,
@@ -47,7 +46,7 @@ const data = {
     },
     {
       title: "Leaderboard",
-      url: "#",
+      url: "/leaderboard",
       icon: TrophyIcon,
     },
     {

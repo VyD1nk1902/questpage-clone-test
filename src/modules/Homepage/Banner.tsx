@@ -9,7 +9,7 @@ import {
 import { cn } from "@/lib/utils";
 import useDeviceType from "@/hooks/useMediaQuery";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
 
 import {
@@ -19,48 +19,53 @@ import {
   bgCarousel_2,
   bgCarousel_3,
 } from "@/constants/image.constant";
+import useApi from "@/hooks/useApi";
+import { missionApi } from "@/apis/mission.api";
+import { ICampaign } from "@/types/mission.type";
 
-const dataCarousel = [
-  {
-    id: "1",
-    background: bgCarousel_1,
-    title: "It's time for Capybaras!",
-    desc: "1000 Point",
-  },
-  {
-    id: "2",
-    background: bgCarousel_2,
-    title: "It's time for Capybaras!",
-    desc: "1000 Point",
-  },
-  {
-    id: "3",
-    background: bgCarousel_3,
-    title: "It's time for Capybaras!",
-    desc: "1000 Point",
-  },
-  {
-    id: "4",
-    background: bgCarousel_1,
-    title: "It's time for Capybaras!",
-    desc: "1000 Point",
-  },
-  {
-    id: "5",
-    background: bgCarousel_2,
-    title: "It's time for Capybaras!",
-    desc: "1000 Point",
-  },
-  {
-    id: "6",
-    background: bgCarousel_3,
-    title: "It's time for Capybaras!",
-    desc: "1000 Point",
-  },
-];
+// const dataCarousel = [
+//   {
+//     id: "1",
+//     background: bgCarousel_1,
+//     title: "It's time for Capybaras!",
+//     desc: "1000 Point",
+//   },
+//   {
+//     id: "2",
+//     background: bgCarousel_2,
+//     title: "It's time for Capybaras!",
+//     desc: "1000 Point",
+//   },
+//   {
+//     id: "3",
+//     background: bgCarousel_3,
+//     title: "It's time for Capybaras!",
+//     desc: "1000 Point",
+//   },
+//   {
+//     id: "4",
+//     background: bgCarousel_1,
+//     title: "It's time for Capybaras!",
+//     desc: "1000 Point",
+//   },
+//   {
+//     id: "5",
+//     background: bgCarousel_2,
+//     title: "It's time for Capybaras!",
+//     desc: "1000 Point",
+//   },
+//   {
+//     id: "6",
+//     background: bgCarousel_3,
+//     title: "It's time for Capybaras!",
+//     desc: "1000 Point",
+//   },
+// ];
 
 const Banner = () => {
   const deviceType = useDeviceType();
+  const { data } = useApi(missionApi.getCampaigns);
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col gap-6 w-full">
       <div className="w-full rounded-[24px]">
@@ -80,16 +85,17 @@ const Banner = () => {
         >
           <Carousel className="w-full relative" opts={{ loop: true }}>
             <CarouselContent>
-              {dataCarousel.map((item) => (
-                <CarouselItem
-                  key={item.id}
-                  className="sm:basis-1/2 md:basis-1/3 w-full"
-                >
-                  <Link to="/">
+              {data &&
+                data.data.map((item: ICampaign) => (
+                  <CarouselItem
+                    key={item._id}
+                    className="sm:basis-1/2 md:basis-1/3 w-full cursor-pointer"
+                    onClick={() => navigate(`/campaign/${item.slug}`)}
+                  >
                     <div className="w-full h-full flex flex-col items-center gap-1 flex-grow flex-shrink-0 basis-0 rounded-2xl bg-[linear-gradient(180deg,var(--background)_0%,var(--accent)_100%)] border border-border overflow-hidden">
                       <div className="relative w-full aspect-[253.33/158.33]">
                         <img
-                          src={item.background}
+                          src={item.banner}
                           className=" w-full h-full rounded-t-2xl object-cover"
                           alt="background-carousel"
                         />
@@ -104,7 +110,7 @@ const Banner = () => {
 
                       <div className="w-full flex p-4 gap-2 flex-col ">
                         <span className="text-base font-semibold">
-                          {item.title}
+                          {item.name}
                         </span>
                         <Separator />
                         <span className="flex gap-1">
@@ -113,13 +119,12 @@ const Banner = () => {
                             className="w-4 h-4"
                             alt="diamond-logo"
                           />
-                          {item.desc}
+                          {item.reward} Point
                         </span>
                       </div>
                     </div>
-                  </Link>
-                </CarouselItem>
-              ))}
+                  </CarouselItem>
+                ))}
             </CarouselContent>
             <CarouselPrevious className="!absolute left-3" />
             <CarouselNext className="!absolute right-3" />
