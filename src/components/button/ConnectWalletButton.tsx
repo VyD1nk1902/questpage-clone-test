@@ -30,6 +30,7 @@ import { getShortAddress } from "@/utils/common-utils";
 import useApi from "@/hooks/useApi";
 import { useUserStore } from "@/stores/user.store";
 import SettingUserModal from "../modal/SettingUserModal";
+import instance from "@/apis/instance";
 
 const ConnectWalletButton = () => {
   const { wallet, wallets, select, connect, connected, publicKey, disconnect } =
@@ -38,7 +39,7 @@ const ConnectWalletButton = () => {
   const { token, setToken } = useUserStore();
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const { data } = useApi(token ? userApi.getUserInfo : null);
+  const { data, mutate } = useApi(token ? userApi.getUserInfo : null);
   const [openDialog, setOpenDialog] = useState(false);
   const nameWallet = [
     {
@@ -122,8 +123,9 @@ const ConnectWalletButton = () => {
           );
           console.log("dataUser", dataUser);
           setToken(dataUser.user.token);
-          showSuccessToast("Connect Wallet Success!");
 
+          mutate(dataUser.user);
+          showSuccessToast("Connect Wallet Success!");
           setOpen(false);
         }
       } catch (err: any) {
@@ -149,7 +151,6 @@ const ConnectWalletButton = () => {
   const handleDisconnect = async () => {
     try {
       setToken(null);
-
       await disconnect();
       console.log("Wallet disconnected");
       showInfoToast("Disconnect Wallet", "You have disconnected your wallet!");
@@ -190,7 +191,7 @@ const ConnectWalletButton = () => {
           <DropdownMenuTrigger>
             <Avatar>
               <AvatarImage
-                src={data?.data.avatar || "https://github.com/shadcn.png"}
+                src={data?.data?.avatar || "https://github.com/shadcn.png"}
                 alt="@shadcn"
               />
             </Avatar>
@@ -204,7 +205,7 @@ const ConnectWalletButton = () => {
                 />
               </Avatar>
               <div className="flex flex-col">
-                <span>{getShortAddress(data?.data.walletAddress || "")}</span>
+                <span>{getShortAddress(data?.data?.walletAddress || "")}</span>
                 <span className="text-xs opacity-60">m@example.com</span>
               </div>
             </DropdownMenuLabel>

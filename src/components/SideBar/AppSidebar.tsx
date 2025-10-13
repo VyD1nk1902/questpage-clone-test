@@ -57,7 +57,7 @@ const data = {
     },
     {
       title: "Profile",
-      url: "#",
+      url: "/profile",
       icon: UserCircleIcon,
     },
   ],

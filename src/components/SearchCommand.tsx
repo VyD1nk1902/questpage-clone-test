@@ -12,11 +12,13 @@ import {
 import React, { useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
 import useDeviceType from "@/hooks/useMediaQuery";
-import useFetchData from "@/hooks/useFetchData";
+// import useFetchData from "@/hooks/useFetchData";
 import { Separator } from "./ui/separator";
 import { useNavigate } from "react-router-dom";
 import { DiamondLogo } from "@/constants/image.constant";
 import { Item } from "@radix-ui/react-dropdown-menu";
+import useApi from "@/hooks/useApi";
+import { missionApi } from "@/apis/mission.api";
 
 interface SearchCommandProps {
   open: boolean;
@@ -26,11 +28,12 @@ interface SearchCommandProps {
 const SearchCommand: React.FC<SearchCommandProps> = ({ open, setOpen }) => {
   const [searchItem, setSearchItem] = useState("");
   const deviceType = useDeviceType();
-  const { campaign, loading } = useFetchData();
+  // const { campaign, loading } = useFetchData();
   const navigate = useNavigate();
+  const { data, isLoading } = useApi(missionApi.getCampaigns);
 
   const isSearching = searchItem.trim().length > 1;
-  const dataSearch = isSearching ? campaign : campaign.slice(0, 6);
+  const dataSearch = isSearching ? data?.data : data?.data.slice(0, 6);
 
   return (
     <div>
@@ -49,36 +52,37 @@ const SearchCommand: React.FC<SearchCommandProps> = ({ open, setOpen }) => {
           )}
         >
           <CommandEmpty>
-            {loading ? "Loading" : "No Result found."}
+            {isLoading ? "Loading" : "No Result found."}
           </CommandEmpty>
           <Separator />
           <CommandGroup heading="Campaign">
             <div className={cn("flex flex-col p-3 gap-3")}>
-              {dataSearch.map((item) => (
-                <CommandItem
-                  key={item.id}
-                  value={`${item.title} ${item.desc}`}
-                  className="flex justify-center gap-1 !p-0 rounded-[16px] !bg-background border border-white/10 cursor-pointer"
-                  // onSelect={() => {
-                  //   navigate(`/campaign/${item.id}`);
-                  //   setOpen(false);
-                  // }}
-                >
-                  <img
-                    src={item.background}
-                    alt={item.background}
-                    className="w-32 min-w-32 aspect-square object-cover rounded-l-[16px]"
-                  />
-                  <div className="flex flex-col gap-2 p-3 flex-1">
-                    <span>{item.title}</span>
-                    <Separator />
-                    <span className="flex gap-1">
-                      <img src={DiamondLogo} className="h-4 w-4" alt="icon" />
-                      {item.desc}
-                    </span>
-                  </div>
-                </CommandItem>
-              ))}
+              {dataSearch &&
+                dataSearch.map((item: any) => (
+                  <CommandItem
+                    key={item.id}
+                    value={`${item.title} ${item.desc}`}
+                    className="flex justify-center gap-1 !p-0 rounded-[16px] !bg-background border border-white/10 cursor-pointer"
+                    // onSelect={() => {
+                    //   navigate(`/campaign/${item.id}`);
+                    //   setOpen(false);
+                    // }}
+                  >
+                    <img
+                      src={item.banner}
+                      alt={item.banner}
+                      className="w-32 min-w-32 aspect-square object-cover rounded-l-[16px]"
+                    />
+                    <div className="flex flex-col gap-2 p-3 flex-1">
+                      <span>{item.name}</span>
+                      <Separator />
+                      <span className="flex gap-1">
+                        <img src={DiamondLogo} className="h-4 w-4" alt="icon" />
+                        {item.description}
+                      </span>
+                    </div>
+                  </CommandItem>
+                ))}
             </div>
           </CommandGroup>
         </CommandList>

@@ -106,7 +106,7 @@ const SettingUserModal = (props: IProps) => {
             {data?.data.username}
           </span>
           <span className="text-xs text-muted-foreground">
-            {getShortAddress(data?.data.walletAddress)}
+            {getShortAddress(data?.data?.walletAddress || "")}
           </span>
           <Separator />
           <div className="w-full grid grid-cols-4">

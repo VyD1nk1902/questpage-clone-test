@@ -178,19 +178,19 @@ const QuestTab = () => {
   const checkVerify = (mission_type_name: string) => {
     let isVerify = false;
     if (mission_type_name == "X") {
-      if (dataUser?.data?.twitter.username) {
+      if (dataUser?.data?.twitter?.username) {
         isVerify = true;
       }
     }
 
     if (mission_type_name == "Discord") {
-      if (dataUser?.data?.discord.username) {
+      if (dataUser?.data?.discord?.username) {
         isVerify = true;
       }
     }
 
     if (mission_type_name == "Telegram") {
-      if (dataUser?.data?.telegram.username) {
+      if (dataUser?.data?.telegram?.username) {
         isVerify = true;
       }
     }

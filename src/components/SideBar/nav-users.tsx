@@ -57,17 +57,17 @@ export function NavUser({}: {
             >
               <Avatar>
                 <AvatarImage
-                  src={data?.data.avatar || "https://github.com/shadcn.png"}
-                  alt={data?.data.username || ""}
+                  src={data?.data?.avatar || "https://github.com/shadcn.png"}
+                  alt={data?.data?.username || ""}
                 />
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">
-                  {data?.data.username}
+                  {data?.data?.username}
                 </span>
                 <span className="truncate text-xs">
-                  {getShortAddress(data?.data.walletAddress || "")}
+                  {getShortAddress(data?.data?.walletAddress || "")}
                 </span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
@@ -87,17 +87,17 @@ export function NavUser({}: {
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar>
                   <AvatarImage
-                    src={data?.data.avatar || "https://github.com/shadcn.png"}
-                    alt={data?.data.username || ""}
+                    src={data?.data?.avatar || "https://github.com/shadcn.png"}
+                    alt={data?.data?.username || ""}
                   />
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">
-                    {data?.data.username || ""}
+                    {data?.data?.username || ""}
                   </span>
                   <span className="truncate text-xs">
-                    {getShortAddress(data?.data.walletAddress || "")}
+                    {getShortAddress(data?.data?.walletAddress || "")}
                   </span>
                 </div>
                 <Check size={20} />

@@ -101,10 +101,10 @@ const Header = () => {
           />
           <div className="flex flex-col">
             <span className="text-muted-foreground">
-              Level {data?.data.level || 1}
+              Level {data?.data?.level || 1}
             </span>
             <span className="text-sm font-medium">
-              {data?.data.xp || 0} Point
+              {data?.data?.xp || 0} Point
             </span>
           </div>
         </div>

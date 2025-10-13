@@ -101,7 +101,7 @@ const LeaderBoard = (props: LeaderBoardProps) => {
                         {item.username}
                       </span>
                       <span className="text-xs font-medium text-muted-foreground">
-                        {getShortAddress(item.walletAddress || "")}
+                        {getShortAddress(item?.walletAddress || "")}
                       </span>
                     </div>
                   </div>

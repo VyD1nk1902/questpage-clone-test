@@ -23,45 +23,6 @@ import useApi from "@/hooks/useApi";
 import { missionApi } from "@/apis/mission.api";
 import { ICampaign } from "@/types/mission.type";
 
-// const dataCarousel = [
-//   {
-//     id: "1",
-//     background: bgCarousel_1,
-//     title: "It's time for Capybaras!",
-//     desc: "1000 Point",
-//   },
-//   {
-//     id: "2",
-//     background: bgCarousel_2,
-//     title: "It's time for Capybaras!",
-//     desc: "1000 Point",
-//   },
-//   {
-//     id: "3",
-//     background: bgCarousel_3,
-//     title: "It's time for Capybaras!",
-//     desc: "1000 Point",
-//   },
-//   {
-//     id: "4",
-//     background: bgCarousel_1,
-//     title: "It's time for Capybaras!",
-//     desc: "1000 Point",
-//   },
-//   {
-//     id: "5",
-//     background: bgCarousel_2,
-//     title: "It's time for Capybaras!",
-//     desc: "1000 Point",
-//   },
-//   {
-//     id: "6",
-//     background: bgCarousel_3,
-//     title: "It's time for Capybaras!",
-//     desc: "1000 Point",
-//   },
-// ];
-
 const Banner = () => {
   const deviceType = useDeviceType();
   const { data } = useApi(missionApi.getCampaigns);

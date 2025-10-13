@@ -1,5 +1,5 @@
-import { useApi } from "./useApi";
 import LocalCampaign from "@/apis/campaign.json";
+import useApi from "./useApi";
 
 export interface Campaign {
   id: string;
@@ -15,10 +15,7 @@ async function fetchCampaign(): Promise<Campaign[]> {
 }
 
 export default function useFetchData() {
-  const { data, error, isLoading } = useApi<Campaign[]>(
-    fetchCampaign,
-    "campaign"
-  );
+  const { data, error, isLoading } = useApi("api/campaign", "campaign");
 
   const campaign = data ?? LocalCampaign;
 
