@@ -1,15 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { CaretRightIcon } from "@phosphor-icons/react";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import LeaderBoard from "@/components/LeaderBoard";
 import {
   ava_1,
@@ -22,6 +12,8 @@ import {
   ava_8,
   ava_9,
 } from "@/constants/image.constant";
+import useDeviceType from "@/hooks/useMediaQuery";
+import { cn } from "@/lib/utils";
 
 const dataTable = [
   {
@@ -97,8 +89,14 @@ const dataTable = [
 ];
 
 const TodayTop = () => {
+  const deviceType = useDeviceType();
   return (
-    <div className="w-full pr-10 flex flex-col gap-2">
+    <div
+      className={cn(
+        "w-full  flex flex-col gap-2",
+        deviceType == "desktop" && "pr-10"
+      )}
+    >
       <div className="flex justify-between items-center w-full">
         <span className="text-sm font-semibold">Today Top 10</span>
         <Button

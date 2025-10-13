@@ -63,10 +63,10 @@ const Banner = () => {
   const deviceType = useDeviceType();
   return (
     <div className="flex flex-col gap-6 w-full">
-      <div className="w-full rounded-[24px]">
+      <div className="w-full ">
         <img
           src={banner}
-          className="w-full h-full object-contain aspect-2/1"
+          className="w-full h-full object-contain rounded-[24px] max-sm:rounded-[16px] aspect-2/1 max-sm:aspect-[351.00/175.50]"
           alt="banner"
         />
       </div>
@@ -75,18 +75,26 @@ const Banner = () => {
         <div
           className={cn(
             "w-full flex items-center justify-center",
-            deviceType == "desktop" ? "h-[306px]" : "h-[290px]"
+            deviceType == "desktop" ? "h-[306px]" : "h-[260px]"
           )}
         >
-          <Carousel className="w-full relative" opts={{ loop: true }}>
+          <Carousel
+            className="w-full h-[90%]"
+            opts={{ loop: true, align: "start" }}
+          >
             <CarouselContent>
               {dataCarousel.map((item) => (
                 <CarouselItem
                   key={item.id}
-                  className="sm:basis-1/2 md:basis-1/3 w-full"
+                  className={cn(
+                    "w-full",
+                    deviceType == "desktop"
+                      ? "basis-1/3"
+                      : "max-sm:basis-2/4 sm:basis-1/3"
+                  )}
                 >
                   <Link to="/">
-                    <div className="w-full h-full flex flex-col items-center gap-1 flex-grow flex-shrink-0 basis-0 rounded-2xl bg-[linear-gradient(180deg,var(--background)_0%,var(--accent)_100%)] border border-border overflow-hidden">
+                    <div className="w-full h-full flex flex-col items-center gap-1 rounded-2xl bg-[linear-gradient(180deg,var(--background)_0%,var(--accent)_100%)] border border-border overflow-hidden">
                       <div className="relative w-full aspect-[253.33/158.33]">
                         <img
                           src={item.background}
@@ -103,7 +111,7 @@ const Banner = () => {
                       </div>
 
                       <div className="w-full flex p-4 gap-2 flex-col ">
-                        <span className="text-base font-semibold">
+                        <span className="text-base line-clamp-2 font-semibold">
                           {item.title}
                         </span>
                         <Separator />
