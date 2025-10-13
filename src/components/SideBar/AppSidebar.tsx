@@ -16,6 +16,7 @@ import {
   SquareTerminal,
   TrophyIcon,
   UserCircleIcon,
+  XIcon,
 } from "lucide-react";
 
 import { NavMain } from "./nav-main";
@@ -31,6 +32,12 @@ import {
 } from "@/components/ui/sidebar";
 import { GearIcon, UsersThreeIcon } from "@phosphor-icons/react";
 import { Separator } from "../ui/separator";
+import useDeviceType from "@/hooks/useMediaQuery";
+import { Button } from "../ui/button";
+
+interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+  setOpen?: (value: boolean) => void; // ✅ thêm prop để đóng Sheet
+}
 
 // This is sample data.
 const data = {
@@ -75,31 +82,51 @@ const data = {
   ],
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({
+  collapsible = "icon",
+  setOpen,
+  ...props
+}: AppSidebarProps) {
+  const deviceType = useDeviceType();
   return (
     <Sidebar
-      collapsible="icon"
+      collapsible={collapsible}
       {...props}
-      // style={{ "--sidebar-width": "260px" } as React.CSSProperties}
       className="border border-r border-border bg-sidebar"
     >
-      <SidebarHeader className="flex flex-col justify-center items-center">
-        <a href="/">
-          <img
-            src={LuckyTechLogo}
-            className="w-full object-contain h-full group-data-[collapsible=icon]:hidden py-3 px-6"
-            alt="LuckyTech_logo"
-          />
-          <img
-            src={LuckyTechMiniLogo}
-            className="hidden w-7 object-contain h-7 group-data-[collapsible=icon]:block"
-            alt="LuckyTech_logo"
-          />
-        </a>
-      </SidebarHeader>
+      {deviceType == "desktop" ? (
+        <SidebarHeader className="flex flex-col justify-center items-center">
+          <a href="/">
+            <img
+              src={LuckyTechLogo}
+              className="w-full object-contain h-full group-data-[collapsible=icon]:hidden py-3 px-6"
+              alt="LuckyTech_logo"
+            />
+            <img
+              src={LuckyTechMiniLogo}
+              className="hidden w-7 object-contain h-7 group-data-[collapsible=icon]:block"
+              alt="LuckyTech_logo"
+            />
+          </a>
+        </SidebarHeader>
+      ) : (
+        <SidebarHeader className="flex flex-row justify-between items-center p-4">
+          <a href="/">
+            <img
+              src={LuckyTechLogo}
+              className="w-[200px] object-contain h-full"
+              alt="LuckyTech_logo"
+            />
+          </a>
+          <Button variant="ghost" size="icon" onClick={() => setOpen?.(false)}>
+            <XIcon />
+          </Button>
+        </SidebarHeader>
+      )}
+
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <Separator />
+        <Separator className="w-[90%] mx-auto" />
         <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
