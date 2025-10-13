@@ -34,7 +34,12 @@ import LoginTwitterButton from "../button/LoginTwitterButton";
 import LoginTelegramButton from "../button/LoginTelegramButton";
 import { showSuccessToast } from "@/utils/toast.utils";
 
-const SettingUserModal = () => {
+interface IProps {
+  selectedTab?: string;
+}
+
+const SettingUserModal = (props: IProps) => {
+  const { selectedTab } = props;
   const { token, files } = useUserStore();
   const { data, mutate } = useApi(token ? userApi.getUserInfo : null);
   const [userName, setUserName] = useState("");
@@ -120,7 +125,7 @@ const SettingUserModal = () => {
         </div>
       </div>
       <div className="w-full p-6">
-        <Tabs defaultValue="account" className="w-full">
+        <Tabs defaultValue="account" value={selectedTab} className="w-full">
           <TabsList className="mb-6">
             <TabsTrigger
               value="account"

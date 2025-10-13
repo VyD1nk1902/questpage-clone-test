@@ -7,10 +7,23 @@ import useApi from "@/hooks/useApi";
 import { missionApi } from "@/apis/mission.api";
 import CountdownComponent from "@/components/CountdownComponent";
 import Countdown, { CountdownRendererFn } from "react-countdown";
+import { useEffect, useState } from "react";
+import { useUserStore } from "@/stores/user.store";
+import { userApi } from "@/apis/user.api";
+import { showSuccessToast } from "@/utils/toast.utils";
+import { cn } from "@/lib/utils";
 
 const ClaimReward = () => {
   const { slug } = useParams<{ slug: string }>();
+  const { token } = useUserStore();
   const { data } = useApi(slug ? missionApi.getCampaignsBySlug(slug) : null);
+  const { data: dataUser, mutate } = useApi(token ? userApi.getUserInfo : null);
+  const { data: leaderboardData, mutate: mutateLeaderboard } = useApi(
+    userApi.getLeaderBoard("all", 1, 10, dataUser?.data.walletAddress)
+  );
+  const [checkClaimCampaign, setCheckClaimCampaign] = useState<
+    "unComplete" | "complete" | "claim"
+  >("unComplete");
   const Completionist = () => (
     <span className="text-xs font-medium">End at: 0h : 0m : 0s</span>
   );
@@ -22,19 +35,55 @@ const ClaimReward = () => {
     seconds,
     completed,
   }) => {
-    const totalHours = days * 24 + hours;
     if (completed) {
       return <Completionist />;
     } else {
       return (
         <span className="text-xs font-medium">
-          End at: {totalHours}h : {minutes}m : {seconds}s
+          End at: {days}d : {hours}h : {minutes}m : {seconds}s
         </span>
       );
     }
   };
 
+  useEffect(() => {
+    const campaignsOfUser = dataUser?.data.campaigns;
+    if (campaignsOfUser) {
+      const joinedCampaign = campaignsOfUser.find(
+        (c: any) => c._id.toString() === data?.data._id.toString()
+      );
+      if (!joinedCampaign || !joinedCampaign.isCompleted) {
+        setCheckClaimCampaign("unComplete");
+      } else if (!joinedCampaign.isClaimed && joinedCampaign.isCompleted) {
+        setCheckClaimCampaign("complete");
+      } else {
+        setCheckClaimCampaign("claim");
+      }
+    }
+  }, [slug, dataUser, data]);
+
   const endDate = data?.data.endDate ? new Date(data.data.endDate) : null;
+
+  const handleClaimCampaign = async (campaignId: string) => {
+    try {
+      const data = await missionApi.claimCampaign(campaignId);
+      if (data) {
+        const newCampaigns = data.data.campaigns;
+        const newLevel = data.data.level;
+        const newXP = data.data.xp;
+
+        mutate({ level: newLevel, xp: newXP, campaigns: newCampaigns }, false);
+        await mutateLeaderboard();
+
+        showSuccessToast(
+          "Campaign Claimed Successfully",
+          "You have successfully claimed the campaign reward."
+        );
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="flex h-[65px] px-6 py-3 justify-center items-center gap-4 rounded-[6px] border border-border shadow-sm bg-gradient-to-b from-indigo-900 to-sky-950">
@@ -57,10 +106,31 @@ const ClaimReward = () => {
       </div>
       <Button
         variant={"icon"}
-        className="!rounded-[6px] bg-[#18181b]/40 w-[124px] hover:bg-[#18181b]/80 text-sm font-medium"
-        size={"default"}
+        disabled={
+          checkClaimCampaign === "unComplete" || checkClaimCampaign === "claim"
+        }
+        className={cn(
+          "!rounded-[6px] w-[124px] text-sm font-medium",
+          checkClaimCampaign === "unComplete"
+            ? "bg-gray-500/40 cursor-not-allowed"
+            : "",
+          checkClaimCampaign === "complete"
+            ? "bg-[#18181b]/40 hover:bg-[#18181b]/80"
+            : "",
+          checkClaimCampaign === "claim"
+            ? "bg-green-600/60 cursor-not-allowed"
+            : ""
+        )}
+        size="default"
+        onClick={() => {
+          if (checkClaimCampaign === "complete") {
+            handleClaimCampaign(data?.data._id);
+          }
+        }}
       >
-        Claim Reward
+        {checkClaimCampaign === "unComplete" && "Incomplete"}
+        {checkClaimCampaign === "complete" && "Claim Reward"}
+        {checkClaimCampaign === "claim" && "Claimed"}
       </Button>
       <Button
         variant={"icon"}

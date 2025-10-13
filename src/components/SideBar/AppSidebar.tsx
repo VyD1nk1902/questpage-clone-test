@@ -30,6 +30,7 @@ import {
 } from "@/components/ui/sidebar";
 import { GearIcon, UsersThreeIcon } from "@phosphor-icons/react";
 import { Separator } from "../ui/separator";
+import { useNavigate } from "react-router-dom";
 
 // This is sample data.
 const data = {
@@ -75,6 +76,7 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const navigate = useNavigate();
   return (
     <Sidebar
       collapsible="icon"
@@ -82,19 +84,20 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       // style={{ "--sidebar-width": "260px" } as React.CSSProperties}
       className="border border-r border-border bg-sidebar"
     >
-      <SidebarHeader className="flex flex-col justify-center items-center">
-        <a href="/">
-          <img
-            src={LuckyTechLogo}
-            className="w-full object-contain h-full group-data-[collapsible=icon]:hidden py-3 px-6"
-            alt="LuckyTech_logo"
-          />
-          <img
-            src={LuckyTechMiniLogo}
-            className="hidden w-7 object-contain h-7 group-data-[collapsible=icon]:block"
-            alt="LuckyTech_logo"
-          />
-        </a>
+      <SidebarHeader
+        className="flex flex-col justify-center items-center cursor-pointer"
+        onClick={() => navigate("/")}
+      >
+        <img
+          src={LuckyTechLogo}
+          className="w-full object-contain h-full group-data-[collapsible=icon]:hidden py-3 px-6"
+          alt="LuckyTech_logo"
+        />
+        <img
+          src={LuckyTechMiniLogo}
+          className="hidden w-7 object-contain h-7 group-data-[collapsible=icon]:block"
+          alt="LuckyTech_logo"
+        />
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />

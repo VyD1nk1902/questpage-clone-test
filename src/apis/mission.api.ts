@@ -23,4 +23,18 @@ export const missionApi = {
     });
     return res.data;
   },
+
+  completeCampaign: async (campaignId: string) => {
+    const res = await instance.post(`${route}/campaigns/complete`, {
+      campaignId: campaignId,
+    });
+    return res.data;
+  },
+
+  claimCampaign: async (campaignId: string) => {
+    const res = await instance.post(`${route}/campaigns/claim`, {
+      campaignId: campaignId,
+    });
+    return res.data;
+  },
 };
