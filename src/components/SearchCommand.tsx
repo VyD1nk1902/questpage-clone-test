@@ -44,7 +44,7 @@ const SearchCommand: React.FC<SearchCommandProps> = ({ open, setOpen }) => {
         />
         <CommandList
           className={cn(
-            "max-h-full flex-1 hide-scrollbar bg-accent",
+            "max-h-screen flex-1 hide-scrollbar bg-accent",
             deviceType == "mobile" && "pb-20"
           )}
         >
