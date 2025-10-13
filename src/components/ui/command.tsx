@@ -31,7 +31,7 @@ const CommandDialog = ({ children, ...props }: DialogProps) => {
           "overflow-hidden p-0",
           deviceType == "desktop"
             ? "!w-[80vw] !max-w-4xl !h-[80vh] max-h-[620px] min-h-[50vh] !rounded-[6px]"
-            : "!w-screen !max-w-[100vw] h-screen top-0 translate-y-0 pb-12 bg-popover z-[70]"
+            : "!w-[90vw] !max-w-lg !h-[60vh] !rounded-[8px]"
         )}
       >
         <Command className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
