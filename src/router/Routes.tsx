@@ -30,6 +30,11 @@ export const routes: Route[] = [
   // },
 
   {
+    path: "/profile",
+    Component: lazy(() => import("@/pages/Profile")),
+  },
+
+  {
     path: "/leaderboard",
     Component: lazy(() => import("@/pages/LeaderBoardPage")),
   },
@@ -37,6 +42,11 @@ export const routes: Route[] = [
   {
     path: "/campaign/:slug",
     Component: lazy(() => import("@/pages/Mission")),
+  },
+
+  {
+    path: "/community",
+    Component: lazy(() => import("@/pages/Community")),
   },
 ];
 

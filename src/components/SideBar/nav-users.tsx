@@ -34,9 +34,7 @@ import useApi from "@/hooks/useApi";
 import { useState } from "react";
 import { useUserStore } from "@/stores/user.store";
 
-export function NavUser({
-  user,
-}: {
+export function NavUser({}: {
   user: {
     name: string;
     code: string;
