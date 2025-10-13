@@ -52,7 +52,7 @@ const JoinedCampaign = () => {
 
       <CardContent className="grid grid-cols-3 gap-4 px-4">
         {data.map((item) => (
-          <Link to="#">
+          <Link to="#" key={item.id}>
             <div className="w-full flex flex-col items-center gap-1 flex-grow flex-shrink-0 basis-0 rounded-2xl bg-[linear-gradient(180deg,var(--background)_0%,var(--accent)_100%)] border border-border overflow-hidden">
               <div className="relative w-full aspect-[253.33/158.33]">
                 <img
