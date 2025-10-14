@@ -19,6 +19,7 @@ import { DiamondLogo } from "@/constants/image.constant";
 import { Item } from "@radix-ui/react-dropdown-menu";
 import useApi from "@/hooks/useApi";
 import { missionApi } from "@/apis/mission.api";
+import { useAppData } from "@/hooks/useAppData";
 
 interface SearchCommandProps {
   open: boolean;
@@ -30,10 +31,13 @@ const SearchCommand: React.FC<SearchCommandProps> = ({ open, setOpen }) => {
   const deviceType = useDeviceType();
   // const { campaign, loading } = useFetchData();
   const navigate = useNavigate();
-  const { data, isLoading } = useApi(missionApi.getCampaigns);
+
+  const { campaigns } = useAppData();
 
   const isSearching = searchItem.trim().length > 1;
-  const dataSearch = isSearching ? data?.data : data?.data.slice(0, 6);
+  const dataSearch = isSearching
+    ? campaigns?.data?.data
+    : campaigns?.data?.data.slice(0, 6);
 
   return (
     <div>
@@ -52,7 +56,7 @@ const SearchCommand: React.FC<SearchCommandProps> = ({ open, setOpen }) => {
           )}
         >
           <CommandEmpty>
-            {isLoading ? "Loading" : "No Result found."}
+            {campaigns?.isLoading ? "Loading" : "No Result found."}
           </CommandEmpty>
           <Separator />
           <CommandGroup heading="Campaign">

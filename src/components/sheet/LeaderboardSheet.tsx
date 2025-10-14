@@ -14,16 +14,22 @@ import LeaderBoard from "../LeaderBoard";
 import useApi from "@/hooks/useApi";
 import { userApi } from "@/apis/user.api";
 import PaginationComponent from "../PaginationComponent";
+import { useAppData } from "@/hooks/useAppData";
 
 const LeaderboardSheet = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const { data } = useApi(userApi.getLeaderBoard("all", currentPage, 10));
+  //   const { data } = useApi(userApi.getLeaderBoard("all", currentPage, 10));
+  const { leaderBoard } = useAppData({
+    leaderboardType: "all",
+    currentPage: currentPage,
+    sizePage: 10,
+  });
   const [total, setTotal] = useState(0);
   useEffect(() => {
-    if (data?.pagination?.total) {
-      setTotal(data.pagination.total);
+    if (leaderBoard?.data?.pagination?.total) {
+      setTotal(leaderBoard?.data.pagination.total);
     }
-  }, [data?.pagination?.total]);
+  }, [leaderBoard?.data?.pagination?.total]);
 
   return (
     <Sheet>
@@ -54,7 +60,7 @@ const LeaderboardSheet = () => {
             Compete with friends to top the charts
           </SheetDescription>
           <LeaderBoard
-            data={data?.data || []}
+            data={leaderBoard?.data?.data || []}
             levelColumn={true}
             type="all"
             currentPage={currentPage}

@@ -26,22 +26,23 @@ import { cn } from "@/lib/utils";
 import SettingUserModal from "@/components/modal/SettingUserModal";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import instance from "@/apis/instance";
+import { useAppData } from "@/hooks/useAppData";
+import { useUpdateData } from "@/hooks/useUpdateData";
 
 const QuestTab = () => {
   const { token } = useUserStore();
   const { slug } = useParams<{ slug: string }>();
-  const { data: dataCampaign } = useApi(
-    slug ? missionApi.getCampaignsBySlug(slug) : null
-  );
-  const { data: dataMission } = useApi(
-    dataCampaign?.data._id
-      ? missionApi.getMissionByCampaign(dataCampaign?.data._id)
-      : null
-  );
-  const { data: dataUser, mutate } = useApi(token ? userApi.getUserInfo : null);
-  const { data: leaderboardData, mutate: mutateLeaderboard } = useApi(
-    userApi.getLeaderBoard("all", 1, 10, dataUser?.data.walletAddress)
-  );
+  const { updateUserInfo } = useUpdateData();
+  const { userInfo, campaignBySlug } = useAppData();
+  const { missionByCampaign } = useAppData({
+    campaignId: campaignBySlug?.data?.data?._id,
+  });
+  const { leaderBoard } = useAppData({
+    leaderboardType: "all",
+    currentPage: 1,
+    sizePage: 10,
+    walletAddress: userInfo?.data?.data?.walletAddress,
+  });
 
   const handleCompleteMission = async (
     missionId: string,
@@ -59,73 +60,79 @@ const QuestTab = () => {
           isClaimed: false,
         };
 
-        const existing = dataUser?.data?.missions || [];
-        mutate({ missions: [...existing, newMission] }, false);
+        const existing = userInfo?.data?.data?.missions || [];
+
+        updateUserInfo({ missions: [...existing, newMission] });
 
         const updatedMissions = [...existing, newMission].map((item: any) => ({
           _id: item._id.toString(),
         }));
 
-        const isAllMissionsCompleted = dataMission?.data?.every(
+        const isAllMissionsCompleted = missionByCampaign?.data?.data?.every(
           (mission: any) =>
             updatedMissions.some(
               (completed: any) => completed._id === mission._id.toString()
             )
         );
 
-        const hasJoined = dataUser?.data?.campaigns
-          ? dataUser?.data?.campaigns.find(
-              (item: any) => item._id.toString() == dataCampaign?.data._id
+        const hasJoined = userInfo?.data?.data?.campaigns
+          ? userInfo?.data?.data?.campaigns.find(
+              (item: any) =>
+                item._id.toString() == campaignBySlug?.data?.data._id
             )
           : null;
 
         if (!hasJoined) {
           const newCampaign = {
-            _id: dataCampaign?.data._id,
-            point: dataCampaign?.data.reward,
+            _id: campaignBySlug?.data?.data._id,
+            point: campaignBySlug?.data?.data.reward,
             dateClaim: null,
             isClaimed: false,
             isCompleted: false,
           };
-          const existingCampaign = dataUser?.data?.campaigns || [];
+          const existingCampaign = userInfo?.data?.data?.campaigns || [];
 
-          mutate({ campaigns: [...existingCampaign, newCampaign] }, false);
+          updateUserInfo({ campaigns: [...existingCampaign, newCampaign] });
         }
 
         if (isAllMissionsCompleted) {
-          await missionApi.completeCampaign(dataCampaign?.data._id);
+          await missionApi.completeCampaign(campaignBySlug.data?.data._id);
           if (!hasJoined) {
             const newCampaign = {
-              _id: dataCampaign?.data._id,
-              point: dataCampaign?.data.reward,
+              _id: campaignBySlug.data?.data._id,
+              point: campaignBySlug.data?.data.reward,
               dateClaim: null,
               isClaimed: false,
               isCompleted: true,
             };
-            const existingCampaign = dataUser?.data?.campaigns || [];
-            mutate({ campaigns: [...existingCampaign, newCampaign] }, false);
+            const existingCampaign = userInfo?.data?.data?.campaigns || [];
+
+            updateUserInfo({ campaigns: [...existingCampaign, newCampaign] });
           } else {
-            const existingCampaigns = dataUser?.data?.campaigns || [];
+            const existingCampaigns = userInfo?.data?.data?.campaigns || [];
             const updatedCampaigns = existingCampaigns.map((item: any) => {
-              if (item._id.toString() === dataCampaign?.data._id.toString()) {
+              if (
+                item._id.toString() === campaignBySlug.data?.data._id.toString()
+              ) {
                 return { ...item, isCompleted: true };
               }
               return item;
             });
-            mutate({ campaigns: updatedCampaigns }, false);
+
+            updateUserInfo({ campaigns: updatedCampaigns });
           }
         } else {
           if (!hasJoined) {
             const newCampaign = {
-              _id: dataCampaign?.data._id,
-              point: dataCampaign?.data.reward,
+              _id: campaignBySlug.data?.data._id,
+              point: campaignBySlug.data?.data.reward,
               dateClaim: null,
               isClaimed: false,
               isCompleted: false,
             };
-            const existingCampaign = dataUser?.data?.campaigns || [];
+            const existingCampaign = userInfo.data?.data?.campaigns || [];
 
-            mutate({ campaigns: [...existingCampaign, newCampaign] }, false);
+            updateUserInfo({ campaigns: [...existingCampaign, newCampaign] });
           }
         }
       }
@@ -142,8 +149,9 @@ const QuestTab = () => {
         const newLevel = data.data.level;
         const newXP = data.data.xp;
 
-        mutate({ level: newLevel, xp: newXP, missions: newMission }, false);
-        await mutateLeaderboard();
+        updateUserInfo({ level: newLevel, xp: newXP, missions: newMission });
+
+        leaderBoard.mutate();
 
         showSuccessToast(
           "Mission Claimed Successfully",
@@ -155,8 +163,8 @@ const QuestTab = () => {
     }
   };
 
-  const completedMissionIds = dataUser?.data?.missions
-    ? dataUser?.data?.missions.map((item: any) => ({
+  const completedMissionIds = userInfo.data?.data?.missions
+    ? userInfo.data?.data?.missions.map((item: any) => ({
         _id: item._id.toString(),
         isClaimed: item.isClaimed,
       }))
@@ -169,7 +177,7 @@ const QuestTab = () => {
   };
 
   const checkMissionClaim = (missionId: string) => {
-    const mission = dataUser?.data.missions?.find(
+    const mission = userInfo.data?.data.missions?.find(
       (item: any) => item._id == missionId
     );
     return mission?.isClaimed;
@@ -178,19 +186,19 @@ const QuestTab = () => {
   const checkVerify = (mission_type_name: string) => {
     let isVerify = false;
     if (mission_type_name == "X") {
-      if (dataUser?.data?.twitter?.username) {
+      if (userInfo.data?.data?.twitter) {
         isVerify = true;
       }
     }
 
     if (mission_type_name == "Discord") {
-      if (dataUser?.data?.discord?.username) {
+      if (userInfo.data?.data?.discord) {
         isVerify = true;
       }
     }
 
     if (mission_type_name == "Telegram") {
-      if (dataUser?.data?.telegram?.username) {
+      if (userInfo.data?.data?.telegram) {
         isVerify = true;
       }
     }
@@ -212,8 +220,8 @@ const QuestTab = () => {
         </TabsList>
       </div>
       <TabsContent value="once" className="flex flex-col gap-3">
-        {dataMission &&
-          dataMission.data.map((item: IMission) => {
+        {missionByCampaign.data &&
+          missionByCampaign.data.data.map((item: IMission) => {
             return (
               <Card
                 key={item._id}

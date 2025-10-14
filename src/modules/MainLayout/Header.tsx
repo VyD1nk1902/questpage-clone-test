@@ -30,6 +30,7 @@ import { useUserStore } from "@/stores/user.store";
 import useApi from "@/hooks/useApi";
 import { userApi } from "@/apis/user.api";
 import SearchCommand from "@/components/SearchCommand";
+import { useAppData } from "@/hooks/useAppData";
 
 const EXPANDED_WIDTH = "16rem"; // Tương đương SIDEBAR_WIDTH
 const COLLAPSED_WIDTH = "3rem"; // Tương đương SIDEBAR_WIDTH_ICON
@@ -51,8 +52,7 @@ const Header = () => {
     ? COLLAPSED_WIDTH
     : EXPANDED_WIDTH;
 
-  const { token } = useUserStore();
-  const { data } = useApi(token ? userApi.getUserInfo : null);
+  const { userInfo } = useAppData();
 
   return (
     <div
@@ -101,10 +101,10 @@ const Header = () => {
           />
           <div className="flex flex-col">
             <span className="text-muted-foreground">
-              Level {data?.data?.level || 1}
+              Level {userInfo?.data?.data?.level || 1}
             </span>
             <span className="text-sm font-medium">
-              {data?.data?.xp || 0} Point
+              {userInfo?.data?.data?.xp || 0} Point
             </span>
           </div>
         </div>

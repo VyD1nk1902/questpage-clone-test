@@ -12,15 +12,21 @@ import { useUserStore } from "@/stores/user.store";
 import { userApi } from "@/apis/user.api";
 import { showSuccessToast } from "@/utils/toast.utils";
 import { cn } from "@/lib/utils";
+import { useAppData } from "@/hooks/useAppData";
+import { useUpdateData } from "@/hooks/useUpdateData";
 
 const ClaimReward = () => {
   const { slug } = useParams<{ slug: string }>();
-  const { token } = useUserStore();
-  const { data } = useApi(slug ? missionApi.getCampaignsBySlug(slug) : null);
-  const { data: dataUser, mutate } = useApi(token ? userApi.getUserInfo : null);
-  const { data: leaderboardData, mutate: mutateLeaderboard } = useApi(
-    userApi.getLeaderBoard("all", 1, 10, dataUser?.data.walletAddress)
-  );
+  const { updateUserInfo } = useUpdateData();
+
+  const { userInfo, campaignBySlug } = useAppData();
+  const { leaderBoard } = useAppData({
+    leaderboardType: "all",
+    currentPage: 1,
+    sizePage: 10,
+    walletAddress: userInfo?.data?.data?.walletAddress,
+  });
+
   const [checkClaimCampaign, setCheckClaimCampaign] = useState<
     "unComplete" | "complete" | "claim"
   >("unComplete");
@@ -47,10 +53,11 @@ const ClaimReward = () => {
   };
 
   useEffect(() => {
-    const campaignsOfUser = dataUser?.data.campaigns;
+    const campaignsOfUser = userInfo?.data?.data.campaigns;
     if (campaignsOfUser) {
       const joinedCampaign = campaignsOfUser.find(
-        (c: any) => c._id.toString() === data?.data._id.toString()
+        (c: any) =>
+          c._id.toString() === campaignBySlug?.data?.data._id.toString()
       );
       if (!joinedCampaign || !joinedCampaign.isCompleted) {
         setCheckClaimCampaign("unComplete");
@@ -60,9 +67,11 @@ const ClaimReward = () => {
         setCheckClaimCampaign("claim");
       }
     }
-  }, [slug, dataUser, data]);
+  }, [slug, userInfo.data, campaignBySlug.data]);
 
-  const endDate = data?.data.endDate ? new Date(data.data.endDate) : null;
+  const endDate = campaignBySlug?.data?.data.endDate
+    ? new Date(campaignBySlug?.data.data.endDate)
+    : null;
 
   const handleClaimCampaign = async (campaignId: string) => {
     try {
@@ -72,8 +81,9 @@ const ClaimReward = () => {
         const newLevel = data.data.level;
         const newXP = data.data.xp;
 
-        mutate({ level: newLevel, xp: newXP, campaigns: newCampaigns }, false);
-        await mutateLeaderboard();
+        updateUserInfo({ level: newLevel, xp: newXP, campaigns: newCampaigns });
+
+        leaderBoard.mutate();
 
         showSuccessToast(
           "Campaign Claimed Successfully",
@@ -99,7 +109,7 @@ const ClaimReward = () => {
       </div>
       <div className="flex flex-col gap-1 flex-1 flex-shrink-0 basis-0">
         <span className="text-lg font-bold">
-          {data?.data.reward || 0} Point
+          {campaignBySlug?.data?.data.reward || 0} Point
         </span>
 
         {endDate && <Countdown date={endDate} renderer={renderer} />}
@@ -124,7 +134,7 @@ const ClaimReward = () => {
         size="default"
         onClick={() => {
           if (checkClaimCampaign === "complete") {
-            handleClaimCampaign(data?.data._id);
+            handleClaimCampaign(campaignBySlug?.data?.data._id);
           }
         }}
       >

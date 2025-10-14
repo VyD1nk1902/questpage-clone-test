@@ -33,6 +33,8 @@ import LoginDiscordButton from "../button/LoginDiscordButton";
 import LoginTwitterButton from "../button/LoginTwitterButton";
 import LoginTelegramButton from "../button/LoginTelegramButton";
 import { showSuccessToast } from "@/utils/toast.utils";
+import { useAppData } from "@/hooks/useAppData";
+import { useUpdateData } from "@/hooks/useUpdateData";
 
 interface IProps {
   selectedTab?: string;
@@ -41,9 +43,17 @@ interface IProps {
 const SettingUserModal = (props: IProps) => {
   const { selectedTab } = props;
   const { token, files } = useUserStore();
-  const { data, mutate } = useApi(token ? userApi.getUserInfo : null);
   const [userName, setUserName] = useState("");
   const [loading, setLoading] = useState(false);
+  const { userInfo } = useAppData();
+  const { leaderBoard } = useAppData({
+    leaderboardType: "all",
+    currentPage: 1,
+    sizePage: 10,
+    walletAddress: userInfo?.data?.data?.walletAddress,
+  });
+  const { updateUserInfo, updateLeaderBoard } = useUpdateData();
+
   const linkSocial = [
     {
       icon: EnvelopeSimple,
@@ -69,22 +79,45 @@ const SettingUserModal = (props: IProps) => {
   const changeDataUser = async () => {
     try {
       setLoading(true);
-      let urlAvatar;
+      let urlAvatar: any;
       if (files[0]) {
         urlAvatar = await userApi.uploadImageDirect(files[0]);
       }
       const data = await userApi.updateUser(userName, urlAvatar);
-      if (data) {
-        mutate({
-          ...(userName && { username: userName }),
-          ...(urlAvatar && { avatar: urlAvatar }),
-        });
+      if (userInfo.data) {
+        updateUserInfo({ username: userName, avatar: urlAvatar });
+
+        updateLeaderBoard({ username: userName, avatar: urlAvatar });
+
         showSuccessToast("User update!");
       }
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleDisconnectSocial = async (typeSocial: string) => {
+    try {
+      const res = await userApi.disconnectSocial(typeSocial);
+      if (res) {
+        if (typeSocial == "discord") {
+          updateUserInfo({ discord: null });
+        }
+
+        if (typeSocial == "twitter") {
+          updateUserInfo({ twitter: null });
+        }
+
+        if (typeSocial == "telegram") {
+          updateUserInfo({ telegram: null });
+        }
+
+        showSuccessToast("Disconnect Success!");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -98,15 +131,17 @@ const SettingUserModal = (props: IProps) => {
           <Avatar className="w-[64px] h-[64px] object-cover">
             <AvatarImage
               className="object-cover"
-              src={data?.data.avatar || "https://github.com/shadcn.png"}
+              src={
+                userInfo.data?.data?.avatar || "https://github.com/shadcn.png"
+              }
               alt="@shadcn"
             />
           </Avatar>
           <span className="text-lg font-medium line-clamp-1">
-            {data?.data.username}
+            {userInfo.data?.data?.username}
           </span>
           <span className="text-xs text-muted-foreground">
-            {getShortAddress(data?.data?.walletAddress || "")}
+            {getShortAddress(userInfo.data?.data?.walletAddress || "")}
           </span>
           <Separator />
           <div className="w-full grid grid-cols-4">
@@ -191,11 +226,69 @@ const SettingUserModal = (props: IProps) => {
 
             <div className="w-full max-w-sm flex flex-col items-start gap-3 mt-3">
               <span className="text-sm">Link Social account</span>
-              <LoginDiscordButton />
 
-              <LoginTwitterButton />
+              {userInfo.data?.data?.discord?.username ? (
+                <div className="w-full h-10 flex items-center justify-between px-4 bg-background border border-border rounded-lg">
+                  <div className="w-fit items-center flex gap-3">
+                    <DiscordLogo
+                      className="text-[#434EE3] w-6 h-6"
+                      weight="fill"
+                    />
+                    <span className="text-sm">
+                      {userInfo.data?.data?.discord?.username}
+                    </span>
+                  </div>
 
-              <LoginTelegramButton />
+                  <Button
+                    className="w-fit !h-6 !min-h-6 !text-xs hover:opacity-80"
+                    onClick={() => handleDisconnectSocial("discord")}
+                  >
+                    Disconnect
+                  </Button>
+                </div>
+              ) : (
+                <LoginDiscordButton />
+              )}
+
+              {userInfo.data?.data?.twitter?.username ? (
+                <div className="w-full h-10 flex items-center justify-between px-4 bg-background border border-border rounded-lg">
+                  <div className="w-fit items-center flex gap-3">
+                    <XLogoIcon className="w-6 h-6" />
+                    <span className="text-sm">
+                      {userInfo.data?.data?.twitter?.username}
+                    </span>
+                  </div>
+
+                  <Button
+                    className="w-fit !h-6 !min-h-6 !text-xs hover:opacity-80"
+                    onClick={() => handleDisconnectSocial("twitter")}
+                  >
+                    Disconnect
+                  </Button>
+                </div>
+              ) : (
+                <LoginTwitterButton />
+              )}
+
+              {userInfo.data?.data?.telegram?.username ? (
+                <div className="w-full h-10 flex items-center justify-between px-4 bg-background border border-border rounded-lg">
+                  <div className="w-fit items-center flex gap-3">
+                    <TelegramLogo className="w-4 h-4" weight="fill" />
+                    <span className="text-sm">
+                      {userInfo.data?.data?.telegram?.username}
+                    </span>
+                  </div>
+
+                  <Button
+                    className="w-fit !h-6 !min-h-6 !text-xs hover:opacity-80"
+                    onClick={() => handleDisconnectSocial("telegram")}
+                  >
+                    Disconnect
+                  </Button>
+                </div>
+              ) : (
+                <LoginTelegramButton />
+              )}
             </div>
           </TabsContent>
         </Tabs>

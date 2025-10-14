@@ -31,15 +31,18 @@ import useApi from "@/hooks/useApi";
 import { useUserStore } from "@/stores/user.store";
 import SettingUserModal from "../modal/SettingUserModal";
 import instance from "@/apis/instance";
+import { useAppData } from "@/hooks/useAppData";
+import { useUpdateData } from "@/hooks/useUpdateData";
 
 const ConnectWalletButton = () => {
   const { wallet, wallets, select, connect, connected, publicKey, disconnect } =
     useWallet();
   const [checked, setChecked] = useState(false);
+  const { updateUserInfo } = useUpdateData();
   const { token, setToken } = useUserStore();
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const { data, mutate } = useApi(token ? userApi.getUserInfo : null);
+  const { userInfo } = useAppData();
   const [openDialog, setOpenDialog] = useState(false);
   const nameWallet = [
     {
@@ -124,7 +127,15 @@ const ConnectWalletButton = () => {
           console.log("dataUser", dataUser);
           setToken(dataUser.user.token);
 
-          mutate(dataUser.user);
+          //   userInfo.mutate(dataUser.user, false);
+          userInfo.mutate(
+            (prev: any) => ({
+              ...prev,
+              data: dataUser.user,
+            }),
+            false
+          );
+
           showSuccessToast("Connect Wallet Success!");
           setOpen(false);
         }
@@ -151,6 +162,7 @@ const ConnectWalletButton = () => {
   const handleDisconnect = async () => {
     try {
       setToken(null);
+      updateUserInfo(null);
       await disconnect();
       console.log("Wallet disconnected");
       showInfoToast("Disconnect Wallet", "You have disconnected your wallet!");
@@ -177,7 +189,7 @@ const ConnectWalletButton = () => {
   };
 
   useEffect(() => {
-    console.log("user", data?.data);
+    console.log("user", userInfo?.data?.data);
   }, [token]);
 
   return (
@@ -191,7 +203,9 @@ const ConnectWalletButton = () => {
           <DropdownMenuTrigger>
             <Avatar>
               <AvatarImage
-                src={data?.data?.avatar || "https://github.com/shadcn.png"}
+                src={
+                  userInfo.data?.data?.avatar || "https://github.com/shadcn.png"
+                }
                 alt="@shadcn"
               />
             </Avatar>
@@ -200,12 +214,17 @@ const ConnectWalletButton = () => {
             <DropdownMenuLabel className="flex items-center gap-2">
               <Avatar>
                 <AvatarImage
-                  src={data?.data.avatar || "https://github.com/shadcn.png"}
+                  src={
+                    userInfo.data?.data?.avatar ||
+                    "https://github.com/shadcn.png"
+                  }
                   alt="@shadcn"
                 />
               </Avatar>
               <div className="flex flex-col">
-                <span>{getShortAddress(data?.data?.walletAddress || "")}</span>
+                <span>
+                  {getShortAddress(userInfo.data?.data?.walletAddress || "")}
+                </span>
                 <span className="text-xs opacity-60">m@example.com</span>
               </div>
             </DropdownMenuLabel>

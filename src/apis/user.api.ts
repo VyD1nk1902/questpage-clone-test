@@ -4,7 +4,7 @@ import instance from "./instance";
 const route = "/user";
 
 export const userApi = {
-  getUserInfo: `${route}/info`,
+  getUserInfo: () => instance.get(`${route}/info`).then((res) => res.data),
 
   getLeaderBoard: (
     type: string,
@@ -12,7 +12,11 @@ export const userApi = {
     sizePage?: number,
     walletAddress?: string
   ) =>
-    `${route}/leaderboard?type=${type}&currentPage=${currentPage}&sizePage=${sizePage}&walletAddress=${walletAddress}`,
+    instance
+      .get(
+        `${route}/leaderboard?type=${type}&currentPage=${currentPage}&sizePage=${sizePage}&walletAddress=${walletAddress}`
+      )
+      .then((res) => res.data),
 
   createSignature: async (address: string) => {
     const res = await instance.post(`${route}/create-signature`, {
@@ -59,6 +63,14 @@ export const userApi = {
     const res = await instance.post(`${route}/update`, {
       username: username,
       avatar: avatar,
+    });
+
+    return res.data;
+  },
+
+  async disconnectSocial(typeSocial: string) {
+    const res = await instance.post(`/disconnect-social`, {
+      typeSocial: typeSocial,
     });
 
     return res.data;

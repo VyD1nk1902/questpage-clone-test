@@ -44,10 +44,10 @@ import { useParams } from "react-router-dom";
 import useApi from "@/hooks/useApi";
 import { missionApi } from "@/apis/mission.api";
 import { getFormatDateToDay } from "@/utils/common-utils";
+import { useAppData } from "@/hooks/useAppData";
 
 const ArcherHunter = () => {
-  const { slug } = useParams<{ slug: string }>();
-  const { data } = useApi(slug ? missionApi.getCampaignsBySlug(slug) : null);
+  const { campaignBySlug } = useAppData();
   return (
     <div className="flex px-6 flex-col align-start gap-3">
       <Breadcrumb>
@@ -61,11 +61,15 @@ const ArcherHunter = () => {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>{data?.data.name || ""}</BreadcrumbPage>
+            <BreadcrumbPage>
+              {campaignBySlug?.data?.data.name || ""}
+            </BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <span className="text-5xl font-bold">{data?.data.name || ""}</span>
+      <span className="text-5xl font-bold">
+        {campaignBySlug?.data?.data.name || ""}
+      </span>
 
       <div className="flex items-center gap-3">
         <LeaderboardSheet />
@@ -87,8 +91,8 @@ const ArcherHunter = () => {
               </Button>
             </CollapsibleTrigger>
             <h4 className="text-sm font-medium text-muted-foreground">
-              {getFormatDateToDay(data?.data.startDate)} -{" "}
-              {getFormatDateToDay(data?.data.endDate)}
+              {getFormatDateToDay(campaignBySlug?.data?.data.startDate)} -{" "}
+              {getFormatDateToDay(campaignBySlug?.data?.data.endDate)}
             </h4>
           </div>
           <CollapsibleContent className="text-sm font-medium text-muted-foreground">

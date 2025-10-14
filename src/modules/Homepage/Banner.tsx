@@ -22,10 +22,11 @@ import {
 import useApi from "@/hooks/useApi";
 import { missionApi } from "@/apis/mission.api";
 import { ICampaign } from "@/types/mission.type";
+import { useAppData } from "@/hooks/useAppData";
 
 const Banner = () => {
   const deviceType = useDeviceType();
-  const { data } = useApi(missionApi.getCampaigns);
+  const { campaigns } = useAppData();
   const navigate = useNavigate();
   return (
     <div className="flex flex-col gap-6 w-full">
@@ -46,8 +47,8 @@ const Banner = () => {
         >
           <Carousel className="w-full relative" opts={{ loop: true }}>
             <CarouselContent>
-              {data &&
-                data.data.map((item: ICampaign) => (
+              {campaigns?.data &&
+                campaigns?.data.data.map((item: ICampaign) => (
                   <CarouselItem
                     key={item._id}
                     className="sm:basis-1/2 md:basis-1/3 w-full cursor-pointer"

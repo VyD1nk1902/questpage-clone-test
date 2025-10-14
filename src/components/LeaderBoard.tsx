@@ -42,7 +42,7 @@ const LeaderBoard = (props: LeaderBoardProps) => {
                 <div className="flex gap-3 items-center">
                   <Avatar className="w-6 h-6 object-contain">
                     <AvatarImage
-                      src={myRank?.avatar || ""}
+                      src={myRank?.avatar || "https://github.com/shadcn.png"}
                       alt={myRank?.username || "username"}
                     />
                     <AvatarFallback className="rounded-lg">CN</AvatarFallback>

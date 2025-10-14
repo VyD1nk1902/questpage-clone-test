@@ -15,16 +15,19 @@ import { useNavigate } from "react-router-dom";
 import { userApi } from "@/apis/user.api";
 import useApi from "@/hooks/useApi";
 import { useUserStore } from "@/stores/user.store";
+import { useAppData } from "@/hooks/useAppData";
 
 const TodayTop = () => {
   const navigate = useNavigate();
-  const { token } = useUserStore();
-  const { data: dataUser } = useApi(token ? userApi.getUserInfo : null);
-  const { data } = useApi(
-    !dataUser
-      ? userApi.getLeaderBoard("all", 1, 10)
-      : userApi.getLeaderBoard("all", 1, 10, dataUser?.data.walletAddress)
-  );
+
+  const { userInfo } = useAppData();
+
+  const { leaderBoard } = useAppData({
+    leaderboardType: "all",
+    currentPage: 1,
+    sizePage: 10,
+    walletAddress: userInfo?.data?.data?.walletAddress,
+  });
 
   return (
     <div className="w-full pr-10 flex flex-col gap-2">
@@ -40,7 +43,10 @@ const TodayTop = () => {
         </Button>
       </div>
       <div className="rounded-xl overflow-hidden border border-border">
-        <LeaderBoard data={data?.data || []} myRank={data?.myRank} />
+        <LeaderBoard
+          data={leaderBoard?.data?.data || []}
+          myRank={leaderBoard?.data?.myRank}
+        />
       </div>
     </div>
   );

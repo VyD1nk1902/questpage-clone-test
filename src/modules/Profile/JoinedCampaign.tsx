@@ -20,26 +20,26 @@ import { userApi } from "@/apis/user.api";
 import useApi from "@/hooks/useApi";
 import { missionApi } from "@/apis/mission.api";
 import { useEffect, useMemo, useState } from "react";
+import { useAppData } from "@/hooks/useAppData";
 
 const JoinedCampaign = () => {
   const navigate = useNavigate();
-  const { token } = useUserStore();
-  const { data: dataUser } = useApi(token ? userApi.getUserInfo : null);
-  const { data: dataCampaign } = useApi(missionApi.getCampaigns);
+
+  const { userInfo, campaigns } = useAppData();
 
   const joinCampaign = useMemo(() => {
-    if (!dataUser || !dataCampaign) return [];
+    if (!userInfo.data || !campaigns.data) return [];
 
     const joinedIds = new Set(
-      dataUser.data?.campaigns?.map((c: any) => c._id.toString()) || []
+      userInfo.data?.data?.campaigns?.map((c: any) => c._id.toString()) || []
     );
 
     return (
-      dataCampaign.data?.filter((campaign: any) =>
+      campaigns.data.data?.filter((campaign: any) =>
         joinedIds.has(campaign._id.toString())
       ) || []
     );
-  }, [dataUser, dataCampaign]);
+  }, [userInfo.data, campaigns.data]);
 
   return (
     <div className="flex flex-col">

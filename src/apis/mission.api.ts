@@ -3,11 +3,14 @@ import instance from "./instance";
 const route = "/mission";
 
 export const missionApi = {
-  getCampaigns: `${route}/campaigns`,
+  getCampaigns: () =>
+    instance.get(`${route}/campaigns`).then((res) => res.data),
 
-  getCampaignsBySlug: (slug: string) => `${route}/campaigns/${slug}`,
+  getCampaignsBySlug: (slug: string) =>
+    instance.get(`${route}/campaigns/${slug}`).then((res) => res.data),
 
-  getMissionByCampaign: (id: string) => `${route}/${id}`,
+  getMissionByCampaign: (id: string) =>
+    instance.get(`${route}/${id}`).then((res) => res.data),
 
   completeMission: async (missionId: string, point: number) => {
     const res = await instance.post(`${route}/complete`, {

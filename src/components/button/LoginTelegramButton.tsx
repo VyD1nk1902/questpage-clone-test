@@ -2,8 +2,14 @@ import instance from "@/apis/instance";
 import React from "react";
 import TelegramLoginButton, { TelegramUser } from "telegram-login-button";
 import { TelegramLogo, CaretRight } from "@phosphor-icons/react";
+import useApi from "@/hooks/useApi";
+import { userApi } from "@/apis/user.api";
+import { useAppData } from "@/hooks/useAppData";
+import { useUpdateData } from "@/hooks/useUpdateData";
 
 const LoginTelegramButton = () => {
+  const { userInfo } = useAppData();
+  const { updateUserInfo } = useUpdateData();
   return (
     <div className="relative w-full">
       <div className="hidden">
@@ -12,7 +18,11 @@ const LoginTelegramButton = () => {
           dataOnauth={(user: TelegramUser) => {
             instance
               .post(`${import.meta.env.VITE_API_URL}/data-telegram`, user)
-              .then(() => console.log("Telegram user:", user))
+              .then(() => {
+                console.log("Telegram user:", user);
+
+                updateUserInfo({ telegram: user });
+              })
               .catch((err) =>
                 console.error("Error fetching Telegram user:", err)
               );

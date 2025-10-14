@@ -17,10 +17,11 @@ import useApi from "@/hooks/useApi";
 import { userApi } from "@/apis/user.api";
 import { getFormatDateToDay, getShortAddress } from "@/utils/common-utils";
 import { getTotalXPByLevel, getXpByLevel } from "@/utils/level";
+import { useAppData } from "@/hooks/useAppData";
 
 const ProfileHead = () => {
-  const { token } = useUserStore();
-  const { data } = useApi(token ? userApi.getUserInfo : null);
+  const { userInfo } = useAppData();
+
   return (
     <div className="flex flex-col gap-3">
       <Breadcrumb>
@@ -31,7 +32,7 @@ const ProfileHead = () => {
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbLink href="#">
-              {data?.data?.username || "-"}
+              {userInfo.data?.data?.username || "-"}
             </BreadcrumbLink>
           </BreadcrumbItem>
         </BreadcrumbList>
@@ -40,7 +41,7 @@ const ProfileHead = () => {
         <Avatar className="w-16 h-16">
           <AvatarImage
             className="w-full h-full object-cover"
-            src={data?.data?.avatar || "https://github.com/shadcn.png"}
+            src={userInfo.data?.data?.avatar || "https://github.com/shadcn.png"}
             alt="@shadcn"
           />
           <AvatarFallback>CN</AvatarFallback>
@@ -48,12 +49,13 @@ const ProfileHead = () => {
         <div className="w-full flex justify-between items-end">
           <div className="flex flex-col gap-2 justify-center">
             <span className="text-lg font-medium">
-              {data?.data?.username || "-"}
+              {userInfo.data?.data?.username || "-"}
             </span>
             <div className="flex gap-3 p-1 pr-3 bg-secondary rounded-3xl">
               <img src={ethLogo} alt="eth-logo" />
               <span className="text-sm font-medium text-muted-foreground">
-                {getShortAddress(data?.data?.walletAddress || "") || "-"}
+                {getShortAddress(userInfo.data?.data?.walletAddress || "") ||
+                  "-"}
               </span>
             </div>
           </div>
@@ -78,7 +80,7 @@ const ProfileHead = () => {
               Join at
             </span>
             <span className="text-sm font-medium">
-              {getFormatDateToDay(data?.data?.createdAt || "")}
+              {getFormatDateToDay(userInfo.data?.data?.createdAt || "")}
             </span>
           </div>
         </div>
@@ -90,7 +92,8 @@ const ProfileHead = () => {
               Total Loyalty
             </span>
             <span className="text-sm font-medium">
-              {getTotalXPByLevel(data?.data?.level || 0) + (data?.data.xp || 0)}{" "}
+              {getTotalXPByLevel(userInfo.data?.data?.level || 0) +
+                (userInfo.data?.data?.xp || 0)}{" "}
               Point
             </span>
           </div>
@@ -98,15 +101,16 @@ const ProfileHead = () => {
         <img src={LineVertical} alt="line-separator" />
         <div className="w-full flex flex-col gap-2 justify-center">
           <div className="flex justify-between">
-            <span>Lv {data?.data?.level || 1}</span>
+            <span>Lv {userInfo.data?.data?.level || 1}</span>
             <span>
-              {data?.data?.xp || 0}/{getXpByLevel(data?.data?.level + 1 || 1)}XP
+              {userInfo.data?.data?.xp || 0}/
+              {getXpByLevel(userInfo.data?.data?.level + 1 || 1)}XP
             </span>
           </div>
           <Progress
             value={
-              (Number(data?.data?.xp || 0) /
-                Number(getXpByLevel(data?.data?.level + 1 || 1))) *
+              (Number(userInfo.data?.data?.xp || 0) /
+                Number(getXpByLevel(userInfo.data?.data?.level + 1 || 1))) *
               100
             }
           />

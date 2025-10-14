@@ -16,17 +16,23 @@ import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 import { userApi } from "@/apis/user.api";
 import useApi from "@/hooks/useApi";
 import PaginationComponent from "@/components/PaginationComponent";
+import { useAppData } from "@/hooks/useAppData";
 
 const LeaderBoardPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [type, setType] = useState("daily");
-  const { data } = useApi(userApi.getLeaderBoard(type, currentPage, 10));
+  //   const { data } = useApi(userApi.getLeaderBoard(type, currentPage, 10));
+  const { leaderBoard } = useAppData({
+    leaderboardType: type,
+    currentPage: currentPage,
+    sizePage: 10,
+  });
   const [total, setTotal] = useState(0);
   useEffect(() => {
-    if (data?.pagination?.total) {
-      setTotal(data.pagination.total);
+    if (leaderBoard?.data?.pagination?.total) {
+      setTotal(leaderBoard?.data.pagination.total);
     }
-  }, [data?.pagination?.total]);
+  }, [leaderBoard?.data?.pagination?.total]);
 
   return (
     <div className="w-full max-w-2xl mx-auto flex flex-col">
@@ -43,7 +49,7 @@ const LeaderBoardPage = () => {
         <>
           <TabsContent value="daily">
             <LeaderBoard
-              data={data?.data || []}
+              data={leaderBoard?.data?.data || []}
               levelColumn={true}
               type="daily"
               currentPage={currentPage}
@@ -51,7 +57,7 @@ const LeaderBoardPage = () => {
           </TabsContent>
           <TabsContent value="week">
             <LeaderBoard
-              data={data?.data || []}
+              data={leaderBoard?.data?.data || []}
               levelColumn={true}
               type="week"
               currentPage={currentPage}
@@ -59,7 +65,7 @@ const LeaderBoardPage = () => {
           </TabsContent>
           <TabsContent value="all">
             <LeaderBoard
-              data={data?.data || []}
+              data={leaderBoard?.data?.data || []}
               levelColumn={true}
               type="all"
               currentPage={currentPage}
