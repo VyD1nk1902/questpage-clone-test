@@ -37,7 +37,7 @@ export const useAppData = (options?: {
         ]
       : null,
     () =>
-      userApi.getLeaderBoard(
+      missionApi.getLeaderBoard(
         options?.leaderboardType!,
         options?.currentPage,
         options?.sizePage,

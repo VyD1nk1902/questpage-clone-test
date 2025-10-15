@@ -12,6 +12,18 @@ export const missionApi = {
   getMissionByCampaign: (id: string) =>
     instance.get(`${route}/${id}`).then((res) => res.data),
 
+  getLeaderBoard: (
+    type: string,
+    currentPage?: number,
+    sizePage?: number,
+    walletAddress?: string
+  ) =>
+    instance
+      .get(
+        `${route}/leaderboard?type=${type}&currentPage=${currentPage}&sizePage=${sizePage}&walletAddress=${walletAddress}`
+      )
+      .then((res) => res.data),
+
   completeMission: async (missionId: string, point: number) => {
     const res = await instance.post(`${route}/complete`, {
       missionId: missionId,

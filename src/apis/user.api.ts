@@ -6,18 +6,6 @@ const route = "/user";
 export const userApi = {
   getUserInfo: () => instance.get(`${route}/info`).then((res) => res.data),
 
-  getLeaderBoard: (
-    type: string,
-    currentPage?: number,
-    sizePage?: number,
-    walletAddress?: string
-  ) =>
-    instance
-      .get(
-        `${route}/leaderboard?type=${type}&currentPage=${currentPage}&sizePage=${sizePage}&walletAddress=${walletAddress}`
-      )
-      .then((res) => res.data),
-
   createSignature: async (address: string) => {
     const res = await instance.post(`${route}/create-signature`, {
       address: address,
