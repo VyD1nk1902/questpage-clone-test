@@ -16,11 +16,12 @@ import { userApi } from "@/apis/user.api";
 import useApi from "@/hooks/useApi";
 import { useUserStore } from "@/stores/user.store";
 import { useAppData } from "@/hooks/useAppData";
+import { useEffect, useRef } from "react";
 
 const TodayTop = () => {
   const navigate = useNavigate();
-
   const { userInfo } = useAppData();
+  const { checkLeaderboardHome, setCheckLeaderboard } = useUserStore();
 
   const { leaderBoard } = useAppData({
     leaderboardType: "all",
@@ -28,6 +29,13 @@ const TodayTop = () => {
     sizePage: 10,
     walletAddress: userInfo?.data?.data?.walletAddress,
   });
+
+  useEffect(() => {
+    if (checkLeaderboardHome) {
+      leaderBoard.mutate();
+      setCheckLeaderboard("home");
+    }
+  }, [checkLeaderboardHome]);
 
   return (
     <div className="w-full pr-10 flex flex-col gap-2">

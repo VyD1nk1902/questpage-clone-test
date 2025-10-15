@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Table,
@@ -17,22 +17,32 @@ import { userApi } from "@/apis/user.api";
 import useApi from "@/hooks/useApi";
 import PaginationComponent from "@/components/PaginationComponent";
 import { useAppData } from "@/hooks/useAppData";
+import { useUserStore } from "@/stores/user.store";
 
 const LeaderBoardPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [type, setType] = useState("daily");
-  //   const { data } = useApi(userApi.getLeaderBoard(type, currentPage, 10));
+  const { checkLeaderboardPage, setCheckLeaderboard } = useUserStore();
+
   const { leaderBoard } = useAppData({
     leaderboardType: type,
     currentPage: currentPage,
     sizePage: 10,
   });
   const [total, setTotal] = useState(0);
+
   useEffect(() => {
     if (leaderBoard?.data?.pagination?.total) {
       setTotal(leaderBoard?.data.pagination.total);
     }
   }, [leaderBoard?.data?.pagination?.total]);
+
+  useEffect(() => {
+    if (checkLeaderboardPage) {
+      leaderBoard.mutate();
+      setCheckLeaderboard("leaderboard");
+    }
+  }, [checkLeaderboardPage]);
 
   return (
     <div className="w-full max-w-2xl mx-auto flex flex-col">

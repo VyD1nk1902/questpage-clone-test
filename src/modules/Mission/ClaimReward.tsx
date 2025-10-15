@@ -18,14 +18,8 @@ import { useUpdateData } from "@/hooks/useUpdateData";
 const ClaimReward = () => {
   const { slug } = useParams<{ slug: string }>();
   const { updateUserInfo } = useUpdateData();
-
+  const { setClaimPoint } = useUserStore();
   const { userInfo, campaignBySlug } = useAppData();
-  const { leaderBoard } = useAppData({
-    leaderboardType: "all",
-    currentPage: 1,
-    sizePage: 10,
-    walletAddress: userInfo?.data?.data?.walletAddress,
-  });
 
   const [checkClaimCampaign, setCheckClaimCampaign] = useState<
     "unComplete" | "complete" | "claim"
@@ -83,7 +77,7 @@ const ClaimReward = () => {
 
         updateUserInfo({ level: newLevel, xp: newXP, campaigns: newCampaigns });
 
-        leaderBoard.mutate();
+        setClaimPoint();
 
         showSuccessToast(
           "Campaign Claimed Successfully",
@@ -96,7 +90,7 @@ const ClaimReward = () => {
   };
 
   return (
-    <div className="flex h-[65px] px-6 py-3 justify-center items-center gap-4 rounded-[6px] border border-border shadow-sm bg-gradient-to-b from-indigo-900 to-sky-950 hover:from-indigo-950 hover:to-blue-950">
+    <div className="flex h-[65px] px-6 py-3 justify-center items-center gap-4 rounded-[6px] border border-border shadow-sm bg-gradient-to-b from-indigo-900 to-sky-950">
       <div className="transform -translate-y-2.5">
         <Avatar className="w-16 h-16">
           <AvatarImage

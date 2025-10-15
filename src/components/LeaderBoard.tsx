@@ -93,7 +93,10 @@ const LeaderBoard = (props: LeaderBoardProps) => {
                 <TableCell>
                   <div className="flex gap-3 items-center">
                     <Avatar className="w-6 h-6 object-contain">
-                      <AvatarImage src={item.avatar} alt={item.username} />
+                      <AvatarImage
+                        src={item.avatar || "https://github.com/shadcn.png"}
+                        alt={item.username}
+                      />
                       <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                     </Avatar>
                     <div className="flex flex-col gap-1">

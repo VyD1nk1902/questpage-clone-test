@@ -31,17 +31,11 @@ import { useUpdateData } from "@/hooks/useUpdateData";
 
 const QuestTab = () => {
   const { token } = useUserStore();
-  const { slug } = useParams<{ slug: string }>();
+  const { setClaimPoint } = useUserStore();
   const { updateUserInfo } = useUpdateData();
   const { userInfo, campaignBySlug } = useAppData();
   const { missionByCampaign } = useAppData({
     campaignId: campaignBySlug?.data?.data?._id,
-  });
-  const { leaderBoard } = useAppData({
-    leaderboardType: "all",
-    currentPage: 1,
-    sizePage: 10,
-    walletAddress: userInfo?.data?.data?.walletAddress,
   });
 
   const handleCompleteMission = async (
@@ -151,7 +145,7 @@ const QuestTab = () => {
 
         updateUserInfo({ level: newLevel, xp: newXP, missions: newMission });
 
-        leaderBoard.mutate();
+        setClaimPoint();
 
         showSuccessToast(
           "Mission Claimed Successfully",

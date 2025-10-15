@@ -42,16 +42,10 @@ interface IProps {
 
 const SettingUserModal = (props: IProps) => {
   const { selectedTab } = props;
-  const { token, files } = useUserStore();
+  const { files } = useUserStore();
   const [userName, setUserName] = useState("");
   const [loading, setLoading] = useState(false);
   const { userInfo } = useAppData();
-  const { leaderBoard } = useAppData({
-    leaderboardType: "all",
-    currentPage: 1,
-    sizePage: 10,
-    walletAddress: userInfo?.data?.data?.walletAddress,
-  });
   const { updateUserInfo, updateLeaderBoard } = useUpdateData();
 
   const linkSocial = [
