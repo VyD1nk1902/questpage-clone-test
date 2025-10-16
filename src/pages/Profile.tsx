@@ -4,7 +4,7 @@ import ProfileHead from "@/modules/Profile/ProfileHead";
 
 const Profile = () => {
   return (
-    <div className="main-content !px-0 max-w-2xl mx-auto">
+    <div className="main-content max-w-2xl min-w-[224px] mx-auto">
       <ProfileHead />
       <Separator />
       <JoinedCampaign />
