@@ -210,7 +210,7 @@ const ConnectWalletButton = () => {
               />
             </Avatar>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="bg-accent min-w-[200px] overflow-hidden">
+          <DropdownMenuContent className="bg-accent min-w-[200px] overflow-hidden !z-[1000]">
             <DropdownMenuLabel className="flex items-center gap-2">
               <Avatar>
                 <AvatarImage
