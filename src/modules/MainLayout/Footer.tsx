@@ -73,7 +73,7 @@ const Footer = () => {
         </footer>
       ) : (
         <footer
-          className="p-3 w-screen z-[10000] fixed bottom-0 h-15 grid grid-cols-4
+          className="p-3 w-screen z-[100] fixed bottom-0 h-15 grid grid-cols-4
          border-t border-border bg-background"
         >
           {dataFooterMobile.map((item, index) => (

@@ -69,7 +69,7 @@ const Header = () => {
             </SheetTrigger>
             <SheetContent
               side="left"
-              className="z-[10001] p-0 bg-sidebar border-r overflow-auto hide-scrollbar"
+              className="z-[100] p-0 bg-sidebar border-r overflow-auto hide-scrollbar"
             >
               <AppSidebar collapsible="none" setOpen={setOpen} />
             </SheetContent>
