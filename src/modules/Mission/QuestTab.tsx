@@ -233,7 +233,7 @@ const QuestTab = () => {
                   )}
                 </CardHeader>
                 <CardContent className="p-0 flex-grow flex-shrink-0 basis-0">
-                  <div className="flex flex-col gap-2 ">
+                  <div className="flex flex-col gap-2 justify-center">
                     <span className="text-sm">{item.name}</span>
                     <span className="flex gap-1">
                       <img
