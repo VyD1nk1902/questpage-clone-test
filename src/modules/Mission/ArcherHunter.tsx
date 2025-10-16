@@ -45,11 +45,13 @@ import useApi from "@/hooks/useApi";
 import { missionApi } from "@/apis/mission.api";
 import { getFormatDateToDay } from "@/utils/common-utils";
 import { useAppData } from "@/hooks/useAppData";
+import useDeviceType from "@/hooks/useMediaQuery";
 
 const ArcherHunter = () => {
   const { campaignBySlug } = useAppData();
+  const deviceType = useDeviceType();
   return (
-    <div className="flex px-6 flex-col align-start gap-3">
+    <div className="flex px-6 max-[350px]:px-2 flex-col align-start gap-3">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -67,75 +69,142 @@ const ArcherHunter = () => {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <span className="text-5xl font-bold">
+      <span className="sm:text-5xl text-3xl font-bold">
         {campaignBySlug?.data?.data.name || ""}
       </span>
 
-      <div className="flex items-center gap-3">
-        <LeaderboardSheet />
+      {deviceType == "desktop" ? (
+        <div className="flex items-center gap-3">
+          <LeaderboardSheet />
+          <span className="text-center text-muted-foreground">5.47K</span>
+          <img
+            className="h-9 mx-1 my-1 justify-center align-center"
+            src={LineVertical}
+            alt=""
+          />
 
-        <span className="text-center text-muted-foreground">5.47K</span>
+          <Collapsible className="min-w-[260px]">
+            <div className="flex justify-start items-center content-center gap-2 flex-1 flex-shrink-0 basis-0 flex-wrap">
+              <CollapsibleTrigger asChild>
+                <Button variant="ghost" size="icon" className="size-8">
+                  <ChevronsUpDown />
+                  <span className="sr-only">Toggle</span>
+                </Button>
+              </CollapsibleTrigger>
+              <h4 className="text-sm font-medium text-muted-foreground">
+                {getFormatDateToDay(campaignBySlug?.data?.data.startDate)} -{" "}
+                {getFormatDateToDay(campaignBySlug?.data?.data.endDate)}
+              </h4>
+            </div>
+            <CollapsibleContent className="text-sm font-medium text-muted-foreground">
+              17:00 GMT+07:00
+            </CollapsibleContent>
+          </Collapsible>
 
-        <img
-          className="h-9 mx-1 my-1 justify-center align-center"
-          src={LineVertical}
-          alt=""
-        />
+          <Button
+            variant={"icon"}
+            size={"icon"}
+            className="!rounded bg-input border border-white/10 hover:bg-white/20 [box-shadow:0_1px_2px_0_var(--muted)]"
+          >
+            <DiscordLogoIcon size={32} weight="fill" color="white" />
+          </Button>
+          <Button
+            variant={"icon"}
+            size={"icon"}
+            className="!rounded bg-input border border-white/10 hover:bg-white/20 [box-shadow:0_1px_2px_0_var(--muted)]"
+          >
+            <XLogoIcon size={32} weight="light" color="white" />
+          </Button>
 
-        <Collapsible className="min-w-[260px]">
-          <div className="flex justify-start items-center content-center gap-2 flex-1 flex-shrink-0 basis-0 flex-wrap">
-            <CollapsibleTrigger asChild>
-              <Button variant="ghost" size="icon" className="size-8">
-                <ChevronsUpDown />
-                <span className="sr-only">Toggle</span>
-              </Button>
-            </CollapsibleTrigger>
-            <h4 className="text-sm font-medium text-muted-foreground">
-              {getFormatDateToDay(campaignBySlug?.data?.data.startDate)} -{" "}
-              {getFormatDateToDay(campaignBySlug?.data?.data.endDate)}
-            </h4>
+          <DropdownMenu>
+            <DropdownMenuTrigger className="bg-primary text-sm font-medium px-3 h-7 rounded-[6px] hover:bg-[#0284c7]/80">
+              Share
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>Share to</DropdownMenuLabel>
+              <DropdownMenuItem>
+                <XLogoIcon /> Share to X
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <TelegramLogoIcon /> Share to Telegram
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <DiscordLogoIcon /> Share to Discord
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <CopyIcon weight="fill" color="white" /> Copy Link
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      ) : (
+        <div className="flex flex-col justify-center items-start gap-3">
+          <div className="flex gap-2 justify-center items-center">
+            <span>Timeline:</span>
+            <Collapsible className="min-w-[260px]">
+              <div className="flex justify-start items-center content-center gap-2 flex-1 flex-shrink-0 basis-0 flex-wrap">
+                <CollapsibleTrigger asChild>
+                  <Button variant="ghost" size="icon" className="size-8">
+                    <ChevronsUpDown />
+                    <span className="sr-only">Toggle</span>
+                  </Button>
+                </CollapsibleTrigger>
+                <h4 className="text-sm font-medium text-muted-foreground">
+                  {getFormatDateToDay(campaignBySlug?.data?.data.startDate)} -{" "}
+                  {getFormatDateToDay(campaignBySlug?.data?.data.endDate)}
+                </h4>
+              </div>
+              <CollapsibleContent className="text-sm font-medium text-muted-foreground">
+                17:00 GMT+07:00
+              </CollapsibleContent>
+            </Collapsible>
           </div>
-          <CollapsibleContent className="text-sm font-medium text-muted-foreground">
-            17:00 GMT+07:00
-          </CollapsibleContent>
-        </Collapsible>
 
-        <Button
-          variant={"icon"}
-          size={"icon"}
-          className="!rounded bg-input border border-white/10 hover:bg-white/20 [box-shadow:0_1px_2px_0_var(--muted)]"
-        >
-          <DiscordLogoIcon size={32} weight="fill" color="white" />
-        </Button>
-        <Button
-          variant={"icon"}
-          size={"icon"}
-          className="!rounded bg-input border border-white/10 hover:bg-white/20 [box-shadow:0_1px_2px_0_var(--muted)]"
-        >
-          <XLogoIcon size={32} weight="light" color="white" />
-        </Button>
+          <div className="w-full flex justify-between items-center">
+            <div className="flex gap-2 items-center">
+              <LeaderboardSheet />
+              <span className="text-center text-muted-foreground">5.47K</span>
+            </div>
+            <div className="flex gap-3">
+              <Button
+                variant={"icon"}
+                size={"icon"}
+                className="!rounded bg-input border border-white/10 hover:bg-white/20 [box-shadow:0_1px_2px_0_var(--muted)]"
+              >
+                <DiscordLogoIcon size={32} weight="fill" color="white" />
+              </Button>
+              <Button
+                variant={"icon"}
+                size={"icon"}
+                className="!rounded bg-input border border-white/10 hover:bg-white/20 [box-shadow:0_1px_2px_0_var(--muted)]"
+              >
+                <XLogoIcon size={32} weight="light" color="white" />
+              </Button>
 
-        <DropdownMenu>
-          <DropdownMenuTrigger className="bg-primary text-sm font-medium px-3 h-7 rounded-[6px] hover:bg-[#0284c7]/80">
-            Share
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuLabel>Share to</DropdownMenuLabel>
-            <DropdownMenuItem>
-              <XLogoIcon /> Share to X
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <TelegramLogoIcon /> Share to Telegram
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <DiscordLogoIcon /> Share to Discord
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <CopyIcon weight="fill" color="white" /> Copy Link
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
+              <DropdownMenu>
+                <DropdownMenuTrigger className="bg-primary text-sm font-medium px-3 h-7 rounded-[6px] hover:bg-[#0284c7]/80">
+                  Share
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuLabel>Share to</DropdownMenuLabel>
+                  <DropdownMenuItem>
+                    <XLogoIcon /> Share to X
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <TelegramLogoIcon /> Share to Telegram
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <DiscordLogoIcon /> Share to Discord
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <CopyIcon weight="fill" color="white" /> Copy Link
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
