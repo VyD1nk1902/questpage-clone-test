@@ -35,6 +35,8 @@ import LoginTelegramButton from "../button/LoginTelegramButton";
 import { showSuccessToast } from "@/utils/toast.utils";
 import { useAppData } from "@/hooks/useAppData";
 import { useUpdateData } from "@/hooks/useUpdateData";
+import useDeviceType from "@/hooks/useMediaQuery";
+import { cn } from "@/lib/utils";
 
 interface IProps {
   selectedTab?: string;
@@ -47,6 +49,7 @@ const SettingUserModal = (props: IProps) => {
   const [loading, setLoading] = useState(false);
   const { userInfo } = useAppData();
   const { updateUserInfo, updateLeaderBoard } = useUpdateData();
+  const deviceType = useDeviceType();
 
   const linkSocial = [
     {
@@ -116,29 +119,66 @@ const SettingUserModal = (props: IProps) => {
   };
 
   return (
-    <DialogContent className="!max-w-2xl flex p-0 bg-input">
-      <div className="w-[210px] min-w-[210px] flex flex-col p-6 gap-5 items-center border-r border-border">
+    <DialogContent
+      className={cn(
+        "flex p-0 bg-input",
+        deviceType == "desktop"
+          ? "!max-w-2xl flex-row"
+          : "flex-col sm:!max-w-lg max-sm:!max-w-sm max-[375px]:!max-w-[300px] max-sm:rounded-[8px] overflow-y-auto max-h-[70vh] !gap-0"
+      )}
+    >
+      <div
+        className={cn(
+          "flex flex-col p-6 gap-5 items-center ",
+          deviceType == "desktop"
+            ? "min-w-[210px] w-[210px]  border-r border-border"
+            : "mx-auto w-full"
+        )}
+      >
         <span className="text-xs text-muted-foreground whitespace-nowrap">
           Account preview
         </span>
         <div className="w-full flex flex-col gap-2 items-center">
-          <Avatar className="w-[64px] h-[64px] object-cover">
-            <AvatarImage
-              className="object-cover"
-              src={
-                userInfo.data?.data?.avatar || "https://github.com/shadcn.png"
-              }
-              alt="@shadcn"
-            />
-          </Avatar>
-          <span className="text-lg font-medium line-clamp-1">
-            {userInfo.data?.data?.username}
-          </span>
-          <span className="text-xs text-muted-foreground">
-            {getShortAddress(userInfo.data?.data?.walletAddress || "")}
-          </span>
-          <Separator />
-          <div className="w-full grid grid-cols-4">
+          <div
+            className={cn(
+              "flex",
+              deviceType == "desktop"
+                ? "flex-col items-center gap-2"
+                : "items-center justify-center gap-2"
+            )}
+          >
+            <Avatar className="w-[64px] h-[64px] object-cover">
+              <AvatarImage
+                className="object-cover"
+                src={
+                  userInfo.data?.data?.avatar || "https://github.com/shadcn.png"
+                }
+                alt="@shadcn"
+              />
+            </Avatar>
+            <div
+              className={cn(
+                "flex flex-col gap-2 justify-center",
+                deviceType == "desktop" && "items-center"
+              )}
+            >
+              <span className="text-lg font-medium line-clamp-1">
+                {userInfo.data?.data?.username}
+              </span>
+              <span className="text-xs text-muted-foreground">
+                {getShortAddress(userInfo.data?.data?.walletAddress || "")}
+              </span>
+            </div>
+          </div>
+          <Separator
+            className={deviceType == "desktop" ? "w-[90%]" : "w-[80%]"}
+          />
+          <div
+            className={cn(
+              "grid grid-cols-4 place-items-center gap-3",
+              deviceType == "desktop" ? "w-full" : "max-w-[150px]"
+            )}
+          >
             {linkSocial.map((item: any, index: number) => {
               const Icon = item.icon;
               return (
@@ -153,18 +193,27 @@ const SettingUserModal = (props: IProps) => {
           </div>
         </div>
       </div>
-      <div className="w-full p-6">
-        <Tabs defaultValue="account" value={selectedTab} className="w-full">
-          <TabsList className="mb-6">
+      <div className="w-full p-6 max-[450px]:p-3">
+        <Tabs
+          defaultValue="account"
+          value={selectedTab}
+          className={cn(
+            "w-full",
+            deviceType == "desktop"
+              ? ""
+              : "!flex flex-col items-center w-[60%] mx-auto max-[375px]:w-[250px]"
+          )}
+        >
+          <TabsList className="mb-6 max-[375px]:gap-2">
             <TabsTrigger
               value="account"
-              className="data-[state=active]:bg-accent"
+              className="data-[state=active]:bg-accent max-[375px]:!px-1"
             >
               Account Setting
             </TabsTrigger>
             <TabsTrigger
               value="social"
-              className="data-[state=active]:bg-accent"
+              className="data-[state=active]:bg-accent max-[375px]:!px-1"
             >
               Social Connect
             </TabsTrigger>
