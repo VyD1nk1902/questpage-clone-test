@@ -47,14 +47,14 @@ const Banner = () => {
         >
           <Carousel
             className="w-full h-[90%]"
-            opts={{ loop: true, align: "start" }}
+            opts={{ loop: true, align: "start", dragFree: true }}
           >
             <CarouselContent>
               {campaigns?.data &&
                 campaigns?.data.data.map((item: ICampaign) => (
                   <CarouselItem
                     key={item._id}
-                    className="sm:basis-1/2 md:basis-1/3 w-full cursor-pointer"
+                    className="max-md:basis-1/2 md:basis-1/3 w-full cursor-pointer"
                     onClick={() => navigate(`/campaign/${item.slug}`)}
                   >
                     <div className="w-full h-full flex flex-col items-center gap-1 flex-grow flex-shrink-0 basis-0 rounded-2xl bg-[linear-gradient(180deg,var(--background)_0%,var(--accent)_100%)] border border-border overflow-hidden">
@@ -91,8 +91,8 @@ const Banner = () => {
                   </CarouselItem>
                 ))}
             </CarouselContent>
-            <CarouselPrevious className="!absolute left-3" />
-            <CarouselNext className="!absolute right-3" />
+            <CarouselPrevious className="!absolute left-3 !z-50" />
+            <CarouselNext className="!absolute right-3 !z-50" />
           </Carousel>
         </div>
       </div>
