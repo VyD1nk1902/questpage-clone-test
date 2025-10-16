@@ -73,8 +73,8 @@ const Banner = () => {
                         ></div>
                       </div>
 
-                      <div className="w-full flex p-4 gap-2 flex-col ">
-                        <span className="text-base font-semibold">
+                      <div className="w-full h-full flex flex-col justify-between p-4 gap-2 ">
+                        <span className="text-base font-semibold truncate">
                           {item.name}
                         </span>
                         <Separator />
