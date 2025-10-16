@@ -59,7 +59,7 @@ const data = {
     },
     {
       title: "Communities",
-      url: "#",
+      url: "/community",
       icon: UsersThreeIcon,
     },
     {
