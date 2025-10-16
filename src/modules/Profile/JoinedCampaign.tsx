@@ -1,12 +1,5 @@
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { CardContent } from "@/components/ui/card";
 import { Link, useNavigate } from "react-router-dom";
 import {
   bgCarousel_1,
@@ -47,7 +40,7 @@ const JoinedCampaign = () => {
         <span className="text-sm font-semibold">Joined Campaign</span>
       </div>
 
-      <CardContent className="grid grid-cols-3 gap-4 px-4">
+      <CardContent className="grid sm:grid-cols-3 max-sm:grid-cols-2 gap-4 px-4">
         {joinCampaign &&
           joinCampaign.map((item: any, index: number) => (
             <div
@@ -70,8 +63,8 @@ const JoinedCampaign = () => {
                 ></div>
               </div>
 
-              <div className="w-full flex p-3 gap-2 flex-col ">
-                <span className="text-base font-semibold text-ellipsis">
+              <div className="w-full h-full flex flex-col justify-between p-3 gap-2">
+                <span className="text-base font-semibold line-clamp-2">
                   {item.name}
                 </span>
                 <Separator />
@@ -81,7 +74,7 @@ const JoinedCampaign = () => {
                     className="w-4 h-4"
                     alt="diamond-logo"
                   />
-                  {item.description}
+                  <span className="line-clamp-4">{item.description}</span>
                 </span>
               </div>
             </div>
