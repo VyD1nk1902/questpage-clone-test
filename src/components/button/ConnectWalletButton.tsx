@@ -42,9 +42,10 @@ const ConnectWalletButton = () => {
   const { updateUserInfo } = useUpdateData();
   const { token, setToken } = useUserStore();
   const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false);
   const { userInfo } = useAppData();
+  const [open, setOpen] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(false);
   const navigate = useNavigate();
   const nameWallet = [
     {
@@ -201,7 +202,7 @@ const ConnectWalletButton = () => {
           Login
         </Button>
       ) : (
-        <DropdownMenu>
+        <DropdownMenu open={openDropdown} onOpenChange={setOpenDropdown}>
           <DropdownMenuTrigger>
             <Avatar>
               <AvatarImage
@@ -243,7 +244,8 @@ const ConnectWalletButton = () => {
               className="cursor-pointer hover:!bg-border"
               onSelect={(e) => {
                 e.preventDefault();
-                setOpenDialog(true);
+                setOpenDropdown(false);
+                setTimeout(() => setOpenDialog(true), 100);
               }}
             >
               <div className="w-full flex gap-2 items-center">
@@ -251,10 +253,6 @@ const ConnectWalletButton = () => {
                 <span>Setting</span>
               </div>
             </DropdownMenuItem>
-
-            <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-              <SettingUserModal />
-            </Dialog>
 
             <DropdownMenuSeparator />
 
@@ -268,6 +266,9 @@ const ConnectWalletButton = () => {
           </DropdownMenuContent>
         </DropdownMenu>
       )}
+      <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+        <SettingUserModal />
+      </Dialog>
       <DialogContent className="w-80 max-w-2xl bg-accent !rounded-2xl">
         <DialogHeader className="flex flex-col items-center gap-3">
           <DialogTitle className="text-2xl">Login With</DialogTitle>
