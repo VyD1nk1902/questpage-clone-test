@@ -18,11 +18,14 @@ import useApi from "@/hooks/useApi";
 import PaginationComponent from "@/components/PaginationComponent";
 import { useAppData } from "@/hooks/useAppData";
 import { useUserStore } from "@/stores/user.store";
+import { cn } from "@/lib/utils";
+import useDeviceType from "@/hooks/useMediaQuery";
 
 const LeaderBoardPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [type, setType] = useState("daily");
   const { checkLeaderboardPage, setCheckLeaderboard } = useUserStore();
+  const deviceType = useDeviceType();
 
   const { leaderBoard } = useAppData({
     leaderboardType: type,
@@ -45,9 +48,16 @@ const LeaderBoardPage = () => {
   }, [checkLeaderboardPage]);
 
   return (
-    <div className="w-full max-w-2xl mx-auto flex flex-col">
-      <Tabs value={type} onValueChange={setType}>
-        <div className="w-full flex items-center justify-between">
+    <div className="w-full max-w-2xl mx-auto flex flex-col !py-3">
+      <Tabs value={type} onValueChange={setType} className="max-[450px]:pl-5">
+        <div
+          className={cn(
+            "w-full flex",
+            deviceType == "desktop"
+              ? "items-center justify-between"
+              : "flex-col items-start gap-6"
+          )}
+        >
           <span className="text-3xl sm:text-5xl font-bold">Leaderboard</span>
           <TabsList>
             <TabsTrigger value="daily">Daily</TabsTrigger>

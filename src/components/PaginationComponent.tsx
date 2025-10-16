@@ -13,7 +13,7 @@ const PaginationComponent = (props: PaginationProps) => {
 
   return (
     <Pagination
-      className="ant-pagination !mt-4"
+      className="ant-pagination !mt-10 max-[350px]:!mt-0"
       pageSize={10}
       onChange={setCurrentPage}
       align="center"
