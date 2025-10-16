@@ -112,14 +112,15 @@ export function AppSidebar({
           />
         </SidebarHeader>
       ) : (
-        <SidebarHeader className="flex flex-row justify-between items-center p-4">
-          <a href="/">
-            <img
-              src={LuckyTechLogo}
-              className="w-[200px] object-contain h-full"
-              alt="LuckyTech_logo"
-            />
-          </a>
+        <SidebarHeader
+          className="flex flex-row justify-between items-center p-4"
+          onClick={() => navigate("/")}
+        >
+          <img
+            src={LuckyTechLogo}
+            className="w-[200px] object-contain h-full"
+            alt="LuckyTech_logo"
+          />
           <Button variant="ghost" size="icon" onClick={() => setOpen?.(false)}>
             <XIcon />
           </Button>

@@ -118,8 +118,12 @@ const Header = () => {
           alt=""
           />
           <div className="flex flex-col">
-            <span className="text-muted-foreground">Loyalty</span>
-            <span className="text-sm font-medium">1000 Point</span>
+            <span className="text-muted-foreground">
+              Level {userInfo?.data?.data?.level || 1}
+            </span>
+            <span className="text-sm font-medium">
+              {userInfo?.data?.data?.xp || 0} Point
+            </span>
           </div>
           </div> */}
 
