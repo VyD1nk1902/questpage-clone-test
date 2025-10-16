@@ -33,6 +33,7 @@ import SettingUserModal from "../modal/SettingUserModal";
 import instance from "@/apis/instance";
 import { useAppData } from "@/hooks/useAppData";
 import { useUpdateData } from "@/hooks/useUpdateData";
+import { useNavigate } from "react-router-dom";
 
 const ConnectWalletButton = () => {
   const { wallet, wallets, select, connect, connected, publicKey, disconnect } =
@@ -44,6 +45,7 @@ const ConnectWalletButton = () => {
   const [open, setOpen] = useState(false);
   const { userInfo } = useAppData();
   const [openDialog, setOpenDialog] = useState(false);
+  const navigate = useNavigate();
   const nameWallet = [
     {
       title: "MetaMask",
@@ -229,7 +231,12 @@ const ConnectWalletButton = () => {
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="cursor-pointer hover:!bg-border">
+            <DropdownMenuItem
+              className="cursor-pointer hover:!bg-border"
+              onSelect={() => {
+                navigate("/profile");
+              }}
+            >
               <User size={16} /> Profile
             </DropdownMenuItem>
             <DropdownMenuItem
