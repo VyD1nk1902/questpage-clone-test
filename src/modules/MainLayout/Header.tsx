@@ -106,8 +106,8 @@ const Header = () => {
             </Button>
           )}
         </div>
+        <SearchCommand open={openSearch} setOpen={setOpenSearch} />
       </div>
-      <SearchCommand open={openSearch} setOpen={setOpenSearch} />
       <div className="flex items-center gap-3">
         {/* <div className="flex gap-2">
           <img
