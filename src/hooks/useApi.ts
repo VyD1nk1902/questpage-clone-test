@@ -1,13 +1,41 @@
+import instance from "@/apis/instance";
+import axios from "axios";
 import useSWR from "swr";
 
-export function useApi<T = any>(
-  fetcher?: (() => Promise<T>) | null,
-  key?: string
-) {
-  const { data, error, isLoading, mutate } = useSWR<T>(
-    fetcher ? key || fetcher.name : null, // nếu fetcher = null => không gọi API
-    fetcher ? () => fetcher() : null
-  );
+const fetcher = (url: string, method: string = "GET", data?: any) => {
+  if (method == "POST") {
+    return instance.post(url, data).then((response) => response.data);
+  } else {
+    return instance.get(url).then((response) => response.data);
+  }
+};
 
-  return { data, error, isLoading, mutate };
-}
+const useApi = (url: string | null, method?: string, data?: any) => {
+  const swr = useSWR(url, () => fetcher(url as string, method, data), {
+    revalidateIfStale: false,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+  });
+  return {
+    ...swr,
+    mutate: (partialData?: any, shouldRevalidate: boolean = false) => {
+      if (!partialData) return swr.mutate();
+
+      return swr.mutate(
+        (current: any) => {
+          if (!current) return current;
+          return {
+            ...current,
+            data: {
+              ...current.data,
+              ...partialData,
+            },
+          };
+        },
+        { revalidate: shouldRevalidate }
+      );
+    },
+  };
+};
+
+export default useApi;

@@ -12,8 +12,16 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ClockIcon } from "@phosphor-icons/react";
 import { Progress } from "@/components/ui/progress";
+import { useUserStore } from "@/stores/user.store";
+import useApi from "@/hooks/useApi";
+import { userApi } from "@/apis/user.api";
+import { getFormatDateToDay, getShortAddress } from "@/utils/common-utils";
+import { getTotalXPByLevel, getXpByLevel } from "@/utils/level";
+import { useAppData } from "@/hooks/useAppData";
 
 const ProfileHead = () => {
+  const { userInfo } = useAppData();
+
   return (
     <div className="flex flex-col gap-3">
       <Breadcrumb>
@@ -23,7 +31,9 @@ const ProfileHead = () => {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbLink href="#">CryptoHawk</BreadcrumbLink>
+            <BreadcrumbLink href="#">
+              {userInfo.data?.data?.username || "-"}
+            </BreadcrumbLink>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
@@ -31,18 +41,21 @@ const ProfileHead = () => {
         <Avatar className="w-16 h-16">
           <AvatarImage
             className="w-full h-full object-cover"
-            src="https://github.com/shadcn.png"
+            src={userInfo.data?.data?.avatar || "https://github.com/shadcn.png"}
             alt="@shadcn"
           />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
         <div className="w-full flex justify-between items-end">
           <div className="flex flex-col gap-2 justify-center">
-            <span className="text-lg font-medium">CryptoHawk</span>
+            <span className="text-lg font-medium">
+              {userInfo.data?.data?.username || "-"}
+            </span>
             <div className="flex gap-3 p-1 pr-3 bg-secondary rounded-3xl">
               <img src={ethLogo} alt="eth-logo" />
               <span className="text-sm font-medium text-muted-foreground">
-                0x45f...d7b8
+                {getShortAddress(userInfo.data?.data?.walletAddress || "") ||
+                  "-"}
               </span>
             </div>
           </div>
@@ -66,7 +79,9 @@ const ProfileHead = () => {
             <span className="text-xs font-medium text-muted-foreground">
               Join at
             </span>
-            <span className="text-sm font-medium">12/29/2025</span>
+            <span className="text-sm font-medium">
+              {getFormatDateToDay(userInfo.data?.data?.createdAt || "")}
+            </span>
           </div>
         </div>
         <img src={LineVertical} alt="line-separator" />
@@ -76,16 +91,29 @@ const ProfileHead = () => {
             <span className="text-xs font-medium text-muted-foreground">
               Total Loyalty
             </span>
-            <span className="text-sm font-medium">1000 Point</span>
+            <span className="text-sm font-medium">
+              {getTotalXPByLevel(userInfo.data?.data?.level || 0) +
+                (userInfo.data?.data?.xp || 0)}{" "}
+              Point
+            </span>
           </div>
         </div>
         <img src={LineVertical} alt="line-separator" />
         <div className="w-full flex flex-col gap-2 justify-center">
           <div className="flex justify-between">
-            <span>Lv 1</span>
-            <span>10/100XP</span>
+            <span>Lv {userInfo.data?.data?.level || 1}</span>
+            <span>
+              {userInfo.data?.data?.xp || 0}/
+              {getXpByLevel(userInfo.data?.data?.level + 1 || 1)}XP
+            </span>
           </div>
-          <Progress value={33} />
+          <Progress
+            value={
+              (Number(userInfo.data?.data?.xp || 0) /
+                Number(getXpByLevel(userInfo.data?.data?.level + 1 || 1))) *
+              100
+            }
+          />
         </div>
       </div>
     </div>

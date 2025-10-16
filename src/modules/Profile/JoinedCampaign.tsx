@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   bgCarousel_1,
   bgCarousel_2,
@@ -15,35 +15,32 @@ import {
   DiamondLogo,
 } from "@/constants/image.constant";
 import { Separator } from "@/components/ui/separator";
-
-const data = [
-  {
-    id: "1",
-    background: bgCarousel_1,
-    title: "It's time for Capybaras!",
-    desc: "1000 Point",
-  },
-  {
-    id: "2",
-    background: bgCarousel_3,
-    title: "It's time for Capybaras!",
-    desc: "1000 Point",
-  },
-  {
-    id: "3",
-    background: bgCarousel_3,
-    title: "It's time for Capybaras!",
-    desc: "1000 Point",
-  },
-  {
-    id: "4",
-    background: bgCarousel_2,
-    title: "It's time for Capybaras!",
-    desc: "1000 Point",
-  },
-];
+import { useUserStore } from "@/stores/user.store";
+import { userApi } from "@/apis/user.api";
+import useApi from "@/hooks/useApi";
+import { missionApi } from "@/apis/mission.api";
+import { useEffect, useMemo, useState } from "react";
+import { useAppData } from "@/hooks/useAppData";
 
 const JoinedCampaign = () => {
+  const navigate = useNavigate();
+
+  const { userInfo, campaigns } = useAppData();
+
+  const joinCampaign = useMemo(() => {
+    if (!userInfo.data || !campaigns.data) return [];
+
+    const joinedIds = new Set(
+      userInfo.data?.data?.campaigns?.map((c: any) => c._id.toString()) || []
+    );
+
+    return (
+      campaigns.data.data?.filter((campaign: any) =>
+        joinedIds.has(campaign._id.toString())
+      ) || []
+    );
+  }, [userInfo.data, campaigns.data]);
+
   return (
     <div className="flex flex-col">
       <div className="h-10 px-6">
@@ -51,12 +48,16 @@ const JoinedCampaign = () => {
       </div>
 
       <CardContent className="grid grid-cols-3 gap-4 px-4">
-        {data.map((item) => (
-          <Link to="#" key={item.id}>
-            <div className="w-full flex flex-col items-center gap-1 flex-grow flex-shrink-0 basis-0 rounded-2xl bg-[linear-gradient(180deg,var(--background)_0%,var(--accent)_100%)] border border-border overflow-hidden">
+        {joinCampaign &&
+          joinCampaign.map((item: any, index: number) => (
+            <div
+              key={index}
+              onClick={() => navigate(`/campaign/${item.slug}`)}
+              className="w-full cursor-pointer flex flex-col items-center gap-1 flex-grow flex-shrink-0 basis-0 rounded-2xl bg-[linear-gradient(180deg,var(--background)_0%,var(--accent)_100%)] border border-border overflow-hidden"
+            >
               <div className="relative w-full aspect-[253.33/158.33]">
                 <img
-                  src={item.background}
+                  src={item.banner}
                   className=" w-full h-full rounded-t-2xl object-cover"
                   alt="background-carousel"
                 />
@@ -71,7 +72,7 @@ const JoinedCampaign = () => {
 
               <div className="w-full flex p-3 gap-2 flex-col ">
                 <span className="text-base font-semibold text-ellipsis">
-                  {item.title}
+                  {item.name}
                 </span>
                 <Separator />
                 <span className="flex gap-1">
@@ -80,12 +81,11 @@ const JoinedCampaign = () => {
                     className="w-4 h-4"
                     alt="diamond-logo"
                   />
-                  {item.desc}
+                  {item.description}
                 </span>
               </div>
             </div>
-          </Link>
-        ))}
+          ))}
       </CardContent>
     </div>
   );

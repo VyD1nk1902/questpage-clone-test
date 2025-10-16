@@ -16,7 +16,6 @@ import { Separator } from "../ui/separator";
 import { Checkbox } from "../ui/checkbox";
 import { showInfoToast, showSuccessToast } from "@/utils/toast.utils";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { useApi } from "@/hooks/useApi";
 import { userApi } from "@/apis/user.api";
 import bs58 from "bs58";
 import {
@@ -28,15 +27,23 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { getShortAddress } from "@/utils/common-utils";
+import useApi from "@/hooks/useApi";
+import { useUserStore } from "@/stores/user.store";
+import SettingUserModal from "../modal/SettingUserModal";
+import instance from "@/apis/instance";
+import { useAppData } from "@/hooks/useAppData";
+import { useUpdateData } from "@/hooks/useUpdateData";
 
 const ConnectWalletButton = () => {
   const { wallet, wallets, select, connect, connected, publicKey, disconnect } =
     useWallet();
   const [checked, setChecked] = useState(false);
-  const token = localStorage.getItem("token");
+  const { updateUserInfo } = useUpdateData();
+  const { token, setToken } = useUserStore();
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const { data } = useApi(token ? userApi.getUserInfo : null);
+  const { userInfo } = useAppData();
+  const [openDialog, setOpenDialog] = useState(false);
   const nameWallet = [
     {
       title: "MetaMask",
@@ -118,9 +125,18 @@ const ConnectWalletButton = () => {
             ""
           );
           console.log("dataUser", dataUser);
-          localStorage.setItem("token", dataUser.user.token);
-          showSuccessToast("Connect Wallet Success!");
+          setToken(dataUser.user.token);
 
+          //   userInfo.mutate(dataUser.user, false);
+          userInfo.mutate(
+            (prev: any) => ({
+              ...prev,
+              data: dataUser.user,
+            }),
+            false
+          );
+
+          showSuccessToast("Connect Wallet Success!");
           setOpen(false);
         }
       } catch (err: any) {
@@ -129,7 +145,8 @@ const ConnectWalletButton = () => {
           "Connect Wallet",
           "Please open Phantom Wallet and log in to continue!"
         );
-        localStorage.removeItem("token");
+        setToken(null);
+
         await disconnect();
         setLoading(false);
       } finally {
@@ -144,7 +161,8 @@ const ConnectWalletButton = () => {
 
   const handleDisconnect = async () => {
     try {
-      localStorage.removeItem("token");
+      setToken(null);
+      updateUserInfo(null);
       await disconnect();
       console.log("Wallet disconnected");
       showInfoToast("Disconnect Wallet", "You have disconnected your wallet!");
@@ -170,6 +188,10 @@ const ConnectWalletButton = () => {
     await select(wallet?.adapter?.name);
   };
 
+  useEffect(() => {
+    console.log("user", userInfo?.data?.data);
+  }, [token]);
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       {!token ? (
@@ -181,7 +203,9 @@ const ConnectWalletButton = () => {
           <DropdownMenuTrigger>
             <Avatar>
               <AvatarImage
-                src={data?.data.avatar || "https://github.com/shadcn.png"}
+                src={
+                  userInfo.data?.data?.avatar || "https://github.com/shadcn.png"
+                }
                 alt="@shadcn"
               />
             </Avatar>
@@ -190,12 +214,17 @@ const ConnectWalletButton = () => {
             <DropdownMenuLabel className="flex items-center gap-2">
               <Avatar>
                 <AvatarImage
-                  src={data?.data.avatar || "https://github.com/shadcn.png"}
+                  src={
+                    userInfo.data?.data?.avatar ||
+                    "https://github.com/shadcn.png"
+                  }
                   alt="@shadcn"
                 />
               </Avatar>
               <div className="flex flex-col">
-                <span>{getShortAddress(data?.data.walletAddress || "")}</span>
+                <span>
+                  {getShortAddress(userInfo.data?.data?.walletAddress || "")}
+                </span>
                 <span className="text-xs opacity-60">m@example.com</span>
               </div>
             </DropdownMenuLabel>
@@ -203,10 +232,23 @@ const ConnectWalletButton = () => {
             <DropdownMenuItem className="cursor-pointer hover:!bg-border">
               <User size={16} /> Profile
             </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer hover:!bg-border">
-              <Gear size={16} />
-              Setting
+            <DropdownMenuItem
+              className="cursor-pointer hover:!bg-border"
+              onSelect={(e) => {
+                e.preventDefault();
+                setOpenDialog(true);
+              }}
+            >
+              <div className="w-full flex gap-2 items-center">
+                <Gear size={16} />
+                <span>Setting</span>
+              </div>
             </DropdownMenuItem>
+
+            <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+              <SettingUserModal />
+            </Dialog>
+
             <DropdownMenuSeparator />
 
             <DropdownMenuItem

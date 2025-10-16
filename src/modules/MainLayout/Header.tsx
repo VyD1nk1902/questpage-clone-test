@@ -10,7 +10,11 @@ import { useSidebar } from "@/components/ui/sidebar";
 import ConnectWalletButton from "@/components/button/ConnectWalletButton";
 import { DiamondLogo } from "@/constants/image.constant";
 import { Separator } from "@/components/ui/separator";
+import { useUserStore } from "@/stores/user.store";
+import useApi from "@/hooks/useApi";
+import { userApi } from "@/apis/user.api";
 import SearchCommand from "@/components/SearchCommand";
+import { useAppData } from "@/hooks/useAppData";
 import { Menu } from "lucide-react";
 
 const EXPANDED_WIDTH = "16rem"; // Tương đương SIDEBAR_WIDTH
@@ -33,6 +37,8 @@ const Header = () => {
     : state === "collapsed"
     ? COLLAPSED_WIDTH
     : EXPANDED_WIDTH;
+
+  const { userInfo } = useAppData();
 
   return (
     <div
@@ -112,8 +118,8 @@ const Header = () => {
           alt=""
           />
           <div className="flex flex-col">
-          <span className="text-muted-foreground">Loyalty</span>
-          <span className="text-sm font-medium">1000 Point</span>
+            <span className="text-muted-foreground">Loyalty</span>
+            <span className="text-sm font-medium">1000 Point</span>
           </div>
           </div> */}
 

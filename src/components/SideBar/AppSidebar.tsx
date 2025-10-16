@@ -12,7 +12,6 @@ import {
   Headset,
   Map,
   PieChart,
-  Settings2,
   SquareTerminal,
   TrophyIcon,
   UserCircleIcon,
@@ -32,6 +31,7 @@ import {
 } from "@/components/ui/sidebar";
 import { GearIcon, UsersThreeIcon } from "@phosphor-icons/react";
 import { Separator } from "../ui/separator";
+import { useNavigate } from "react-router-dom";
 import useDeviceType from "@/hooks/useMediaQuery";
 import { Button } from "../ui/button";
 
@@ -64,7 +64,7 @@ const data = {
     },
     {
       title: "Profile",
-      url: "#",
+      url: "/profile",
       icon: UserCircleIcon,
     },
   ],
@@ -88,6 +88,7 @@ export function AppSidebar({
   ...props
 }: AppSidebarProps) {
   const deviceType = useDeviceType();
+  const navigate = useNavigate();
   return (
     <Sidebar
       collapsible={collapsible}
@@ -95,19 +96,20 @@ export function AppSidebar({
       className="border border-r border-border bg-sidebar"
     >
       {deviceType == "desktop" ? (
-        <SidebarHeader className="flex flex-col justify-center items-center">
-          <a href="/">
-            <img
-              src={LuckyTechLogo}
-              className="w-full object-contain h-full group-data-[collapsible=icon]:hidden py-3 px-6"
-              alt="LuckyTech_logo"
-            />
-            <img
-              src={LuckyTechMiniLogo}
-              className="hidden w-7 object-contain h-7 group-data-[collapsible=icon]:block"
-              alt="LuckyTech_logo"
-            />
-          </a>
+        <SidebarHeader
+          className="flex flex-col justify-center items-center cursor-pointer"
+          onClick={() => navigate("/")}
+        >
+          <img
+            src={LuckyTechLogo}
+            className="w-full object-contain h-full group-data-[collapsible=icon]:hidden py-3 px-6"
+            alt="LuckyTech_logo"
+          />
+          <img
+            src={LuckyTechMiniLogo}
+            className="hidden w-7 object-contain h-7 group-data-[collapsible=icon]:block"
+            alt="LuckyTech_logo"
+          />
         </SidebarHeader>
       ) : (
         <SidebarHeader className="flex flex-row justify-between items-center p-4">

@@ -24,10 +24,10 @@ export const routes: Route[] = [
     Component: lazy(() => import("@/pages/CallBackPage/DiscordCallBackPage")),
   },
 
-  {
-    path: "/mission",
-    Component: lazy(() => import("@/pages/Mission")),
-  },
+  // {
+  //   path: "/mission",
+  //   Component: lazy(() => import("@/pages/Mission")),
+  // },
 
   {
     path: "/profile",
@@ -38,6 +38,12 @@ export const routes: Route[] = [
     path: "/leaderboard",
     Component: lazy(() => import("@/pages/LeaderBoardPage")),
   },
+
+  {
+    path: "/campaign/:slug",
+    Component: lazy(() => import("@/pages/Mission")),
+  },
+
   {
     path: "/community",
     Component: lazy(() => import("@/pages/Community")),

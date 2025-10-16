@@ -1,5 +1,5 @@
-import Banner from "@/modules/Homepage/Banner";
-import TodayTop from "@/modules/Homepage/TodayTop";
+import Banner from "@/modules/HomePage/Banner";
+import TodayTop from "@/modules/HomePage/TodayTop";
 import React from "react";
 import useDeviceType from "@/hooks/useMediaQuery";
 import { cn } from "@/lib/utils";

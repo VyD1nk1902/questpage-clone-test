@@ -39,8 +39,15 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { LineVertical } from "@/constants/image.constant";
+import LeaderboardSheet from "@/components/sheet/LeaderboardSheet";
+import { useParams } from "react-router-dom";
+import useApi from "@/hooks/useApi";
+import { missionApi } from "@/apis/mission.api";
+import { getFormatDateToDay } from "@/utils/common-utils";
+import { useAppData } from "@/hooks/useAppData";
 
 const ArcherHunter = () => {
+  const { campaignBySlug } = useAppData();
   return (
     <div className="flex px-6 flex-col align-start gap-3">
       <Breadcrumb>
@@ -54,51 +61,18 @@ const ArcherHunter = () => {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>Archer Hunter Moves FASTER on SEI</BreadcrumbPage>
+            <BreadcrumbPage>
+              {campaignBySlug?.data?.data.name || ""}
+            </BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
       <span className="text-5xl font-bold">
-        Archer Hunter Moves FASTER on SEI
+        {campaignBySlug?.data?.data.name || ""}
       </span>
 
       <div className="flex items-center gap-3">
-        <Sheet>
-          <SheetTrigger>
-            <div className="flex -space-x-2">
-              <Avatar>
-                <AvatarImage src="" alt="@shadcn" />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-              <Avatar>
-                <AvatarImage
-                  src="https://github.com/shadcn.png"
-                  alt="@shadcn"
-                />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-              <Avatar>
-                <AvatarImage
-                  src="https://github.com/shadcn.png"
-                  alt="@shadcn"
-                />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-              <Avatar>
-                <AvatarImage src="" alt="@shadcn" />
-                <AvatarFallback>+4</AvatarFallback>
-              </Avatar>
-            </div>
-          </SheetTrigger>
-          <SheetContent className="!max-w-xl">
-            <SheetHeader>
-              <SheetTitle>Leaderboard</SheetTitle>
-              <SheetDescription>
-                Compete with friends to top the charts
-              </SheetDescription>
-            </SheetHeader>
-          </SheetContent>
-        </Sheet>
+        <LeaderboardSheet />
 
         <span className="text-center text-muted-foreground">5.47K</span>
 
@@ -117,7 +91,8 @@ const ArcherHunter = () => {
               </Button>
             </CollapsibleTrigger>
             <h4 className="text-sm font-medium text-muted-foreground">
-              2025/09/17 - 2025/10/01
+              {getFormatDateToDay(campaignBySlug?.data?.data.startDate)} -{" "}
+              {getFormatDateToDay(campaignBySlug?.data?.data.endDate)}
             </h4>
           </div>
           <CollapsibleContent className="text-sm font-medium text-muted-foreground">

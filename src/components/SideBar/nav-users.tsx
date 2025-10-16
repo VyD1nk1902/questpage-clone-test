@@ -28,9 +28,12 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Separator } from "../ui/separator";
-import { useApi } from "@/hooks/useApi";
 import { userApi } from "@/apis/user.api";
 import { getShortAddress } from "@/utils/common-utils";
+import useApi from "@/hooks/useApi";
+import { useState } from "react";
+import { useUserStore } from "@/stores/user.store";
+import { useAppData } from "@/hooks/useAppData";
 
 export function NavUser({}: {
   user: {
@@ -40,8 +43,9 @@ export function NavUser({}: {
   };
 }) {
   const { isMobile } = useSidebar();
-  const token = localStorage.getItem("token");
-  const { data } = useApi(token ? userApi.getUserInfo : null);
+
+  const { token } = useUserStore();
+  const { userInfo } = useAppData();
 
   return (
     <SidebarMenu>
@@ -54,17 +58,20 @@ export function NavUser({}: {
             >
               <Avatar>
                 <AvatarImage
-                  src={data?.data.avatar || "https://github.com/shadcn.png"}
-                  alt={data?.data.username || ""}
+                  src={
+                    userInfo.data?.data?.avatar ||
+                    "https://github.com/shadcn.png"
+                  }
+                  alt={userInfo.data?.data?.username || ""}
                 />
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">
-                  {data?.data.username}
+                  {userInfo.data?.data?.username}
                 </span>
                 <span className="truncate text-xs">
-                  {getShortAddress(data?.data.walletAddress || "")}
+                  {getShortAddress(userInfo.data?.data?.walletAddress || "")}
                 </span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
@@ -84,17 +91,20 @@ export function NavUser({}: {
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar>
                   <AvatarImage
-                    src={data?.data.avatar || "https://github.com/shadcn.png"}
-                    alt={data?.data.username || ""}
+                    src={
+                      userInfo.data?.data?.avatar ||
+                      "https://github.com/shadcn.png"
+                    }
+                    alt={userInfo.data?.data?.username || ""}
                   />
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">
-                    {data?.data.username || ""}
+                    {userInfo.data?.data?.username || ""}
                   </span>
                   <span className="truncate text-xs">
-                    {getShortAddress(data?.data.walletAddress || "")}
+                    {getShortAddress(userInfo.data?.data?.walletAddress || "")}
                   </span>
                 </div>
                 <Check size={20} />
