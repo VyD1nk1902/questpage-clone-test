@@ -40,7 +40,7 @@ const ProfileHead = () => {
 
   return (
     <div className="flex flex-col gap-3">
-      <Breadcrumb className="max-sm:px-6">
+      <Breadcrumb className="px-6">
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink href="#">Profile</BreadcrumbLink>
@@ -147,7 +147,7 @@ const ProfileHead = () => {
           </div>
         </div>
       ) : (
-        <div className="px-6 flex flex-col gap-6">
+        <div className="px-3 flex flex-col gap-6">
           <div className="flex gap-6 items-center">
             <div className="flex gap-3 items-center">
               <div className="bg-secondary rounded-full flex justify-center items-center w-7 h-7">
