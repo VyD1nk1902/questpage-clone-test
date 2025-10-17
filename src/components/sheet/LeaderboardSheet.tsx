@@ -53,12 +53,15 @@ const LeaderboardSheet = () => {
           </Avatar>
         </div>
       </SheetTrigger>
-      <SheetContent className="!max-w-xl bg-background">
-        <SheetHeader>
-          <SheetTitle>Leaderboard</SheetTitle>
-          <SheetDescription>
-            Compete with friends to top the charts
-          </SheetDescription>
+      <SheetContent className="!max-w-xl bg-background pt-24 overflow-y-auto">
+        <div className="flex flex-col h-[100svh] max-h-[100dvh]">
+          <SheetHeader>
+            <SheetTitle>Leaderboard</SheetTitle>
+            <SheetDescription>
+              Compete with friends to top the charts
+            </SheetDescription>
+          </SheetHeader>
+
           <LeaderBoard
             data={leaderBoard?.data?.data || []}
             levelColumn={true}
@@ -70,7 +73,7 @@ const LeaderboardSheet = () => {
             currentPage={currentPage}
             setCurrentPage={(page: number) => setCurrentPage(page)}
           />
-        </SheetHeader>
+        </div>
       </SheetContent>
     </Sheet>
   );
