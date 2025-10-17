@@ -118,7 +118,7 @@ export function AppSidebar({
         >
           <img
             src={LuckyTechLogo}
-            className="w-[200px] object-contain h-full"
+            className="w-[60%] object-contain h-full"
             alt="LuckyTech_logo"
           />
           <Button variant="ghost" size="icon" onClick={() => setOpen?.(false)}>
