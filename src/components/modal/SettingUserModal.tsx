@@ -124,7 +124,7 @@ const SettingUserModal = (props: IProps) => {
         "flex p-0 bg-input",
         deviceType == "desktop"
           ? "!max-w-2xl flex-row"
-          : "flex-col sm:!max-w-lg max-sm:!max-w-sm max-[375px]:!max-w-[300px] max-sm:rounded-[8px] overflow-y-auto max-h-[70vh] !gap-0"
+          : "flex-col !max-w-lg max-sm:!max-w-sm max-[375px]:!max-w-[300px] max-sm:rounded-[8px] overflow-y-auto max-h-[70vh] !gap-0"
       )}
     >
       <div
@@ -193,7 +193,7 @@ const SettingUserModal = (props: IProps) => {
           </div>
         </div>
       </div>
-      <div className="w-full p-6 max-[450px]:p-3">
+      <div className="w-full p-6 max-sm:p-3">
         <Tabs
           defaultValue="account"
           value={selectedTab}
@@ -271,19 +271,19 @@ const SettingUserModal = (props: IProps) => {
               <span className="text-sm">Link Social account</span>
 
               {userInfo.data?.data?.discord?.username ? (
-                <div className="w-full h-10 flex items-center justify-between px-4 bg-background border border-border rounded-lg">
-                  <div className="w-fit items-center flex gap-3">
+                <div className="w-full h-10 flex items-center justify-between max-sm:px-2 px-4 bg-background border border-border rounded-lg">
+                  <div className="w-fit items-center flex gap-3 max-sm:gap-1">
                     <DiscordLogo
                       className="text-[#434EE3] w-6 h-6"
                       weight="fill"
                     />
-                    <span className="text-sm">
+                    <span className="text-sm truncate w-[80px] lg:w-[120px]">
                       {userInfo.data?.data?.discord?.username}
                     </span>
                   </div>
 
                   <Button
-                    className="w-fit !h-6 !min-h-6 !text-xs hover:opacity-80"
+                    className="w-fit max-sm:w-[40%] !h-6 !min-h-6 !text-xs hover:opacity-80"
                     onClick={() => handleDisconnectSocial("discord")}
                   >
                     Disconnect
@@ -294,16 +294,16 @@ const SettingUserModal = (props: IProps) => {
               )}
 
               {userInfo.data?.data?.twitter?.username ? (
-                <div className="w-full h-10 flex items-center justify-between px-4 bg-background border border-border rounded-lg">
-                  <div className="w-fit items-center flex gap-3">
+                <div className="w-full h-10 flex items-center justify-between max-sm:px-2 px-4 bg-background border border-border rounded-lg">
+                  <div className="w-fit items-center flex gap-3 max-sm:gap-1">
                     <XLogoIcon className="w-6 h-6" />
-                    <span className="text-sm">
+                    <span className="text-sm truncate w-[80px] lg:w-[120px]">
                       {userInfo.data?.data?.twitter?.username}
                     </span>
                   </div>
 
                   <Button
-                    className="w-fit !h-6 !min-h-6 !text-xs hover:opacity-80"
+                    className="w-fit max-sm:w-[40%] !h-6 !min-h-6 !text-xs hover:opacity-80"
                     onClick={() => handleDisconnectSocial("twitter")}
                   >
                     Disconnect
