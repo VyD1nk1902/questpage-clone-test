@@ -12,6 +12,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { DiamondLogo } from "@/constants/image.constant";
 import { getShortAddress } from "@/utils/common-utils";
 import { cn } from "@/lib/utils";
+import useDeviceType from "@/hooks/useMediaQuery";
 
 interface LeaderBoardProps {
   data: any;
@@ -23,8 +24,9 @@ interface LeaderBoardProps {
 
 const LeaderBoard = (props: LeaderBoardProps) => {
   const { data, levelColumn, myRank, type = "all", currentPage = 1 } = props;
+  const deviceType = useDeviceType();
   return (
-    <div className={cn(!myRank && "!min-h-[716px] !h-[716px]")}>
+    <div className={cn(!myRank && "lg:!min-h-[716px] lg:!h-[716px]")}>
       <Table className="border-separate border-spacing-y-2">
         <TableHeader>
           <TableRow>
@@ -60,7 +62,7 @@ const LeaderBoard = (props: LeaderBoardProps) => {
                 <span className="text-sm">Wallet</span>
               )}
             </TableHead>
-            {levelColumn && (
+            {levelColumn && deviceType == "desktop" && (
               <TableHead className="p-2 w-16">
                 <span className="text-sm">LV</span>
               </TableHead>
@@ -109,7 +111,7 @@ const LeaderBoard = (props: LeaderBoardProps) => {
                     </div>
                   </div>
                 </TableCell>
-                {levelColumn && (
+                {levelColumn && deviceType == "desktop" && (
                   <TableCell>
                     <span>{item.level}</span>
                   </TableCell>
