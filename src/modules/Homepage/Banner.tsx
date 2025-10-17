@@ -30,12 +30,22 @@ const Banner = () => {
   const navigate = useNavigate();
   return (
     <div className="flex flex-col gap-6 w-full">
-      <div className="w-full ">
+      <div className="w-full relative">
         <img
           src={banner}
-          className="w-full h-full object-contain rounded-[24px] max-sm:rounded-[16px] aspect-2/1 max-sm:aspect-[351.00/175.50]"
           alt="banner"
+          className="w-full h-full object-cover !rounded-[24px] max-sm:rounded-[16px] aspect-[2/1] max-sm:aspect-[351.00/175.50]"
         />
+        {/* <div className="absolute inset-0 z-10 rounded-[24px] max-sm:rounded-[16px] bg-gradient-overlay"></div> */}
+        <div className="absolute z-10 right-0 bottom-0 flex w-[150px] h-[52px] gap-1 justify-center items-center bg-[linear-gradient(180deg,var(--background)_0%,var(--accent)_100%)] rounded-tl-3xl rounded-br-3xl">
+          <img src={DiamondLogo} className="w-7 h-7" alt="diamond_logo" />
+          <span className="text-lg font-medium">1000 Point</span>
+        </div>
+        <div className="absolute z-10 left-0 bottom-0 p-3 md:p-6 w-[70%]">
+          <span className="text-xl sm:text-3xl font-bold line-clamp-2">
+            It's time for Capybaras!
+          </span>
+        </div>
       </div>
       <div>
         <span className="text-xl font-semibold px-2">Campaigns</span>
@@ -74,7 +84,7 @@ const Banner = () => {
                       </div>
 
                       <div className="w-full h-full flex flex-col justify-between p-4 gap-2 ">
-                        <span className="text-base font-semibold truncate">
+                        <span className="text-base font-semibold line-clamp-2">
                           {item.name}
                         </span>
                         <Separator />
