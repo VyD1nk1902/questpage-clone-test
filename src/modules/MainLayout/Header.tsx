@@ -68,7 +68,7 @@ const Header = () => {
               <Button
                 variant="ghost"
                 size="icon"
-                className="bg-background flex w-10 h-10 rounded-[6px] justify-center items-center border border-border"
+                className="bg-background flex min-w-10 h-10 rounded-[6px] justify-center items-center border border-border"
               >
                 <Menu size={16} />
               </Button>
