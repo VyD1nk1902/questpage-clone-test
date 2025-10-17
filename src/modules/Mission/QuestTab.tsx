@@ -220,7 +220,7 @@ const QuestTab = () => {
               <Card
                 key={item._id}
                 className={cn(
-                  "flex items-center gap-3 px-6 py-4 bg-background",
+                  "flex items-center gap-3 sm:px-6 max-sm:px-3 py-4 bg-background",
                   !token &&
                     "cursor-not-allowed pointer-events-none opacity-50 select-none"
                 )}

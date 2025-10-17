@@ -13,7 +13,7 @@ const QuestDetail = () => {
       <div className="px-6 h-10 flex items-center">
         <span className="text-sm font-semibold">Quest Detail</span>
       </div>
-      <Card className="bg-background p-6 flex flex-col gap-4 items-center">
+      <Card className="bg-background sm:p-6 max-sm:p-3  flex flex-col gap-4 items-center">
         <CardContent>
           <div>
             <div className="mb-6 space-y-2 text-sm">
