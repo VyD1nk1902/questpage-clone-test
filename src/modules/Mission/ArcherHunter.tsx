@@ -20,7 +20,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ChevronsUpDown } from "lucide-react";
+import { ChevronsUpDown, Share } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   CopyIcon,
@@ -46,10 +46,14 @@ import { missionApi } from "@/apis/mission.api";
 import { getFormatDateToDay } from "@/utils/common-utils";
 import { useAppData } from "@/hooks/useAppData";
 import useDeviceType from "@/hooks/useMediaQuery";
+import useShare from "@/hooks/useShare";
 
 const ArcherHunter = () => {
   const { campaignBySlug } = useAppData();
   const deviceType = useDeviceType();
+  const { share } = useShare();
+  const title = campaignBySlug?.data?.data.name || "Check out this campaign!";
+  const url = window.location.href;
   return (
     <div className="flex px-6 max-[350px]:px-2 flex-col align-start gap-3">
       <Breadcrumb>
@@ -122,16 +126,20 @@ const ArcherHunter = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuLabel>Share to</DropdownMenuLabel>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => share("x", { title, url })}>
                 <XLogoIcon /> Share to X
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => share("telegram", { title, url })}
+              >
                 <TelegramLogoIcon /> Share to Telegram
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => share("discord", { title, url })}
+              >
                 <DiscordLogoIcon /> Share to Discord
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => share("copy", { title, url })}>
                 <CopyIcon weight="fill" color="white" /> Copy Link
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -187,16 +195,22 @@ const ArcherHunter = () => {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   <DropdownMenuLabel>Share to</DropdownMenuLabel>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => share("x", { title, url })}>
                     <XLogoIcon /> Share to X
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => share("telegram", { title, url })}
+                  >
                     <TelegramLogoIcon /> Share to Telegram
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => share("discord", { title, url })}
+                  >
                     <DiscordLogoIcon /> Share to Discord
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => share("copy", { title, url })}
+                  >
                     <CopyIcon weight="fill" color="white" /> Copy Link
                   </DropdownMenuItem>
                 </DropdownMenuContent>
