@@ -7,8 +7,8 @@ type MediaQueryType = "desktop" | "mobile";
 const useDeviceType = (): MediaQueryType => {
   const [deviceType, setDeviceType] = useState<MediaQueryType>("desktop");
 
-  const isDesktop = useMediaQuery({ query: "(min-width: 1000px)" });
-  const isMobile = useMediaQuery({ query: "(max-width: 999px)" });
+  const isDesktop = useMediaQuery({ query: "(min-width: 1200px)" });
+  const isMobile = useMediaQuery({ query: "(max-width: 1199px)" });
 
   useEffect(() => {
     if (isDesktop) {
