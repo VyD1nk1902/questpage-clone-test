@@ -27,12 +27,14 @@ import {
 
 export function NavProjects({
   projects,
+  setOpenDialog,
 }: {
   projects: {
     name: string;
     url: string;
     icon: LucideIcon;
   }[];
+  setOpenDialog?: (value: boolean) => void;
 }) {
   const { isMobile } = useSidebar();
 
@@ -42,7 +44,16 @@ export function NavProjects({
         {projects.map((item) => (
           <SidebarMenuItem key={item.name}>
             <SidebarMenuButton asChild>
-              <a href={item.url}>
+              <a
+                href={item.url}
+                onClick={(e) => {
+                  // ✅ khi click "Setting" thì mở modal chung
+                  if (item.name === "Setting") {
+                    e.preventDefault();
+                    setOpenDialog?.(true);
+                  }
+                }}
+              >
                 <item.icon />
                 <span>{item.name}</span>
               </a>

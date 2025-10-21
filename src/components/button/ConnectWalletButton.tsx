@@ -35,7 +35,11 @@ import { useAppData } from "@/hooks/useAppData";
 import { useUpdateData } from "@/hooks/useUpdateData";
 import { useNavigate } from "react-router-dom";
 
-const ConnectWalletButton = () => {
+const ConnectWalletButton = ({
+  setOpenDialog,
+}: {
+  setOpenDialog?: (value: boolean) => void;
+}) => {
   const { wallet, wallets, select, connect, connected, publicKey, disconnect } =
     useWallet();
   const [checked, setChecked] = useState(false);
@@ -44,7 +48,6 @@ const ConnectWalletButton = () => {
   const [loading, setLoading] = useState(false);
   const { userInfo } = useAppData();
   const [open, setOpen] = useState(false);
-  const [openDialog, setOpenDialog] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(false);
   const navigate = useNavigate();
   const nameWallet = [
@@ -245,7 +248,7 @@ const ConnectWalletButton = () => {
               onSelect={(e) => {
                 e.preventDefault();
                 setOpenDropdown(false);
-                setTimeout(() => setOpenDialog(true), 100);
+                setTimeout(() => setOpenDialog?.(true), 100);
               }}
             >
               <div className="w-full flex gap-2 items-center">
@@ -266,9 +269,6 @@ const ConnectWalletButton = () => {
           </DropdownMenuContent>
         </DropdownMenu>
       )}
-      <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-        <SettingUserModal />
-      </Dialog>
       <DialogContent className="w-80 max-w-2xl bg-accent !rounded-2xl">
         <DialogHeader className="flex flex-col items-center gap-3">
           <DialogTitle className="text-2xl">Login With</DialogTitle>

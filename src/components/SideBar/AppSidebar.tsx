@@ -37,6 +37,7 @@ import { Button } from "../ui/button";
 
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   setOpen?: (value: boolean) => void; // ✅ thêm prop để đóng Sheet
+  setOpenDialog?: (value: boolean) => void;
 }
 
 // This is sample data.
@@ -49,7 +50,7 @@ const data = {
   navMain: [
     {
       title: "Discovery & Earn",
-      url: "#",
+      url: "/",
       icon: CompassIcon,
     },
     {
@@ -85,6 +86,7 @@ const data = {
 export function AppSidebar({
   collapsible = "icon",
   setOpen,
+  setOpenDialog, // ✅ nhận từ Index
   ...props
 }: AppSidebarProps) {
   const deviceType = useDeviceType();
@@ -130,7 +132,7 @@ export function AppSidebar({
       <SidebarContent>
         <NavMain items={data.navMain} />
         <Separator className="w-[90%] mx-auto" />
-        <NavProjects projects={data.projects} />
+        <NavProjects projects={data.projects} setOpenDialog={setOpenDialog} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />
