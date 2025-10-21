@@ -20,7 +20,11 @@ import { Menu } from "lucide-react";
 const EXPANDED_WIDTH = "16rem"; // Tương đương SIDEBAR_WIDTH
 const COLLAPSED_WIDTH = "3rem"; // Tương đương SIDEBAR_WIDTH_ICON
 
-const Header = () => {
+const Header = ({
+  setOpenDialog,
+}: {
+  setOpenDialog?: (value: boolean) => void;
+}) => {
   const deviceType = useDeviceType();
   const navigate = useNavigate();
 
@@ -77,7 +81,12 @@ const Header = () => {
               side="left"
               className="z-[100] p-0 bg-sidebar border-r overflow-auto hide-scrollbar"
             >
-              <AppSidebar collapsible="none" setOpen={setOpen} />
+              <AppSidebar
+                collapsible="none"
+                setOpen={setOpen}
+                setOpenDialog={setOpenDialog}
+                onClick={() => setOpen(false)}
+              />
             </SheetContent>
           </Sheet>
         )}
@@ -128,7 +137,7 @@ const Header = () => {
           </div> */}
 
         <Separator orientation="vertical" className="h-9" />
-        <ConnectWalletButton />
+        <ConnectWalletButton setOpenDialog={setOpenDialog} />
       </div>
     </div>
   );
