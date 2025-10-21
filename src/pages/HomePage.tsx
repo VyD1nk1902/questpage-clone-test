@@ -9,8 +9,8 @@ const HomePage = () => {
   return (
     <div
       className={cn(
-        "px-3 py-5 gap-6",
-        deviceType == "desktop" ? "grid grid-cols-[60%_40%]" : "flex flex-col"
+        "main-content px-3 py-5 gap-6",
+        deviceType == "desktop" ? "!grid grid-cols-[60%_40%]" : "flex flex-col"
       )}
     >
       <Banner />
