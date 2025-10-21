@@ -88,7 +88,7 @@ const Footer = () => {
               }
             >
               <item.icon size={20} />
-              <span className="text-xs">{item.title}</span>
+              <span className="text-xs max-[350px]:hidden">{item.title}</span>
             </NavLink>
           ))}
         </footer>
