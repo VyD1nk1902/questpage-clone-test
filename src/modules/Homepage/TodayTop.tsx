@@ -33,8 +33,10 @@ const TodayTop = () => {
   return (
     <div
       className={cn(
-        "w-full flex flex-col gap-2 max-lg:pt-5 max-md:pt-10 max-sm:pt-0",
-        deviceType == "desktop" && "pr-10"
+        "w-full flex flex-col gap-2",
+        deviceType == "desktop"
+          ? "pr-10"
+          : "mt-20 max-[700px]:mt-10 max-[450px]:mt-5"
       )}
     >
       <div className="flex justify-between items-center w-full">
