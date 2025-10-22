@@ -3,6 +3,7 @@ import { Toaster } from "./components/ui/sonner";
 import { Suspense, useEffect } from "react";
 import AppRouter from "./router/AppRouter";
 import SolanaProvider from "./provider/SolanaProvider";
+import MetaTags from "./components/meta/MetaTags";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         >
           <AppRouter />
         </Suspense>
+        <MetaTags />
       </BrowserRouter>
     </SolanaProvider>
   );
