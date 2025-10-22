@@ -52,6 +52,7 @@
     "react-countdown": "^2.3.6",
     "react-dom": "^19.0.0",
     "react-fast-marquee": "^1.6.5",
+    "react-head": "^3.4.2",
     "react-hook-form": "^7.58.1",
     "react-responsive": "^10.0.1",
     "react-router-dom": "^6.26.1",

@@ -140,7 +140,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.27.1"
 
-"@babel/runtime@^7.10.1", "@babel/runtime@^7.18.3", "@babel/runtime@^7.21.0", "@babel/runtime@^7.24.0", "@babel/runtime@^7.25.0", "@babel/runtime@^7.26.0", "@babel/runtime@^7.26.10", "@babel/runtime@^7.6.0":
+"@babel/runtime@^7.10.1", "@babel/runtime@^7.11.2", "@babel/runtime@^7.18.3", "@babel/runtime@^7.21.0", "@babel/runtime@^7.24.0", "@babel/runtime@^7.25.0", "@babel/runtime@^7.26.0", "@babel/runtime@^7.26.10", "@babel/runtime@^7.6.0":
   version "7.28.4"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.28.4.tgz#a70226016fabe25c5783b2f22d3e1c9bc5ca3326"
   integrity sha512-Q/N6JNWvIvPnLDvjlE1OUBLPQHH6l3CltCEsHIujp45zQUSSh8K+gHnaEX45yAT1nyngnINhvWtzN+Nb9D8RAQ==
@@ -8715,6 +8715,13 @@ react-fast-marquee@^1.6.5:
   version "1.6.5"
   resolved "https://registry.yarnpkg.com/react-fast-marquee/-/react-fast-marquee-1.6.5.tgz#98929ae93eef087a607a71e9d45ab76bba97dc16"
   integrity sha512-swDnPqrT2XISAih0o74zQVE2wQJFMvkx+9VZXYYNSLb/CUcAzU9pNj637Ar2+hyRw6b4tP6xh4GQZip2ZCpQpg==
+
+react-head@^3.4.2:
+  version "3.4.2"
+  resolved "https://registry.yarnpkg.com/react-head/-/react-head-3.4.2.tgz#d4137ad7452d8484bba13ac84a2c6fe51c30e838"
+  integrity sha512-mnl6u7E0SSzY9w+mExKGVz8vW/oObUTnj+vpRaZF6jcdjFcCGs0vl8MRwlRws56dye3f1CpzU7C/hz3b3S2BBA==
+  dependencies:
+    "@babel/runtime" "^7.11.2"
 
 react-hook-form@^7.58.1:
   version "7.63.0"
